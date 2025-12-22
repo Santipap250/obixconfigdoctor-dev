@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <title>OBIX Config Doctor</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+<h1>🛠 OBIX Config Doctor</h1>
+<p>วาง Betaflight CLI แล้วให้ระบบช่วยตรวจ</p>
+
+<form method="post">
+    <textarea name="cli" placeholder="วาง CLI ที่นี่..."></textarea>
+    <br><br>
+    <button type="submit">วิเคราะห์</button>
+</form>
+
+{% if result %}
+<pre class="result">{{ result }}</pre>
+{% endif %}
+
+</body>
+</html>
