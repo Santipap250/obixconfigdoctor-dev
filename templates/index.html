@@ -4,81 +4,75 @@
 <meta charset="UTF-8">
 <title>OBIXConfig Doctor</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-function copyText(id){
-    const text=document.getElementById(id).innerText;
+function copyText(id) {
+    const text = document.getElementById(id).innerText;
     navigator.clipboard.writeText(text);
-    alert("คัดลอกไปใช้ Betaflight ได้แล้ว");
+    alert("คัดลอกไปใช้ใน Betaflight ได้แล้ว");
 }
 </script>
 </head>
 <body>
 <div class="container">
 <h1>🛠 OBIXConfig Doctor</h1>
-<p class="subtitle">วิเคราะห์ PID / Filter + ใบพัด + T/W + Battery</p>
+<p class="subtitle">วิเคราะห์ค่า PID, Filter และใบพัด สำหรับ FPV Drone</p>
 
 <form method="POST" class="form-card">
-<label>ขนาดโดรน (นิ้ว)</label>
-<input type="number" name="size" placeholder="เช่น 5" required>
+    <label>ขนาดโดรน (นิ้ว)</label>
+    <input type="number" name="size" placeholder="เช่น 5" required>
 
-<label>แบตเตอรี่</label>
-<select name="battery">
-<option value="4S">4S</option>
-<option value="6S">6S</option>
-</select>
+    <label>น้ำหนักโดรน (กรัม)</label>
+    <input type="number" name="weight" placeholder="เช่น 950" required>
 
-<label>สไตล์การบิน</label>
-<select name="style">
-<option value="freestyle">Freestyle</option>
-<option value="longrange">Long Range / Cinematic</option>
-<option value="racing">Racing</option>
-</select>
+    <label>แบตเตอรี่</label>
+    <select name="battery">
+        <option value="4S">4S</option>
+        <option value="6S">6S</option>
+    </select>
 
-<hr>
-<h3>ใบพัด</h3>
-<label>ขนาดใบพัด (นิ้ว)</label>
-<input type="number" step="0.1" name="prop_size" value="5" required>
-<label>จำนวนใบ</label>
-<select name="blades">
-<option value="2">2 ใบ</option>
-<option value="3" selected>3 ใบ</option>
-<option value="4">4 ใบ</option>
-</select>
-<label>Pitch ใบพัด</label>
-<input type="number" step="0.1" name="pitch" value="4.0" required>
+    <label>สไตล์การบิน</label>
+    <select name="style">
+        <option value="freestyle">Freestyle</option>
+        <option value="longrange">Long Range / Cinematic</option>
+        <option value="racing">Racing</option>
+    </select>
 
-<button type="submit">วิเคราะห์</button>
+    <label>ขนาดใบพัด (นิ้ว)</label>
+    <input type="number" name="prop_size" value="5" required>
+
+    <label>จำนวนใบพัด</label>
+    <select name="blades">
+        <option value="2">2 ใบ</option>
+        <option value="3" selected>3 ใบ</option>
+        <option value="4">4 ใบ</option>
+    </select>
+
+    <label>Pitch ใบพัด</label>
+    <input type="number" step="0.1" name="pitch" value="4.0" required>
+
+    <button type="submit">วิเคราะห์</button>
 </form>
 
 {% if analysis %}
 <div class="result-card">
 <h2>🔍 ผลการวิเคราะห์</h2>
-
 <p><strong>{{ analysis.overview }}</strong></p>
 
-<h3>แนวคิดพื้นฐาน</h3>
+<h3>แนวคิดการตั้งค่า</h3>
 <ul>
 {% for tip in analysis.basic_tips %}
 <li>{{ tip }}</li>
 {% endfor %}
 </ul>
 
-<h3>ใบพัด</h3>
-<p>{{ analysis.prop.prop_profile }}</p>
-<ul>
-<li>Noise: {{ analysis.prop.effect.noise }}</li>
-<li>Motor Load: {{ analysis.prop.effect.motor_load }}</li>
-<li>Grip: {{ analysis.prop.effect.grip }}</li>
-<li>Efficiency: {{ analysis.prop.effect.efficiency }}</li>
-<li>Recommendation: {{ analysis.prop.recommendation }}</li>
-</ul>
-
-<h3>⚙️ PID</h3>
+<h3>⚙️ PID (ค่าแนะนำ)</h3>
 <pre id="pid">
-ROLL  P {{ analysis.pid.roll.p }} I {{ analysis.pid.roll.i }} D {{ analysis.pid.roll.d }}
+ROLL  P {{ analysis.pid.roll.p }}  I {{ analysis.pid.roll.i }}  D {{ analysis.pid.roll.d }}
 PITCH P {{ analysis.pid.pitch.p }} I {{ analysis.pid.pitch.i }} D {{ analysis.pid.pitch.d }}
-YAW   P {{ analysis.pid.yaw.p }} I {{ analysis.pid.yaw.i }}
+YAW   P {{ analysis.pid.yaw.p }}   I {{ analysis.pid.yaw.i }}
 </pre>
 <button onclick="copyText('pid')">Copy PID</button>
 
@@ -90,22 +84,52 @@ Dynamic Notch: {{ analysis.filter.dyn_notch }}
 </pre>
 <button onclick="copyText('filter')">Copy Filter</button>
 
-<h3>💡 Extra Tips</h3>
-<ul>
-{% for ex in analysis.extra_tips %}
-<li>{{ ex }}</li>
-{% endfor %}
-</ul>
+<h3>💡 Extra Tools</h3>
+<p>Thrust-to-Weight Ratio: {{ analysis.extra.thrust_ratio }}</p>
+<p>Battery Runtime Estimate: {{ analysis.extra.battery_runtime }} นาที</p>
 
-<h3>⚡ Thrust-to-Weight Ratio</h3>
-<p>{{ analysis.tw_ratio }} : 1</p>
-<h3>🔋 Battery Runtime Estimate</h3>
-<p>{{ analysis.battery_runtime }} นาที</p>
+<h3>📊 Visualization</h3>
+<canvas id="thrustChart" width="400" height="200"></canvas>
+<canvas id="noiseChart" width="400" height="200"></canvas>
+
+<script>
+const thrustCtx = document.getElementById('thrustChart').getContext('2d');
+new Chart(thrustCtx, {
+    type: 'bar',
+    data: {
+        labels: ['Thrust-to-Weight'],
+        datasets: [{
+            label: 'Ratio',
+            data: [{{ analysis.extra.thrust_ratio.split(':')[0] }}],
+            backgroundColor: ['rgba(54, 162, 235, 0.6)']
+        }]
+    },
+    options: { scales: { y: { beginAtZero: true } } }
+});
+
+const noiseCtx = document.getElementById('noiseChart').getContext('2d');
+new Chart(noiseCtx, {
+    type: 'line',
+    data: {
+        labels: ['Motor Load', 'Noise Level'],
+        datasets: [{
+            label: 'Effect',
+            data: [{{ analysis.prop_result.effect.motor_load }}, {{ analysis.prop_result.effect.noise_level }}],
+            fill: false,
+            borderColor: 'rgb(255, 99, 132)',
+            tension: 0.3
+        }]
+    },
+    options: { scales: { y: { beginAtZero: true } } }
+});
+</script>
 
 </div>
 {% endif %}
 
-<footer>OBIXConfig Doctor • ใช้งานจริงกับ Betaflight</footer>
+<footer>
+OBIXConfig Doctor • ใช้งานจริงสำหรับ FPV / Betaflight
+</footer>
 </div>
 </body>
 </html>
