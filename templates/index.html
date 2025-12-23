@@ -1,41 +1,50 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OBIXConfig Doctor</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-<script>
-function copyText(id) {
-    const text = document.getElementById(id).innerText;
-    navigator.clipboard.writeText(text);
-    alert("คัดลอกสำเร็จ!");
-}
-</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OBIXConfig Doctor</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <!-- Copy to clipboard -->
+    <script>
+        function copyText(id) {
+            const text = document.getElementById(id).innerText;
+            navigator.clipboard.writeText(text);
+            alert("คัดลอกสำเร็จ!");
+        }
+    </script>
 </head>
+
 <body>
-<div class="container">
+<main class="container">
+
     <h1>🛠 OBIXConfig Doctor</h1>
     <p class="subtitle">ผู้ช่วยวิเคราะห์ & แนะนำค่า FPV Config แบบมืออาชีพ</p>
 
+    <!-- FORM -->
     <form method="POST" class="form-card">
+
         <label>ขนาดโดรน (นิ้ว)</label>
         <input type="number" name="size" placeholder="เช่น 5" required>
 
         <label>แบตเตอรี่</label>
-        <select name="battery">
+        <select name="battery" required>
             <option value="4S">4S</option>
             <option value="6S">6S</option>
         </select>
 
         <label>สไตล์การบิน</label>
-        <select name="style">
+        <select name="style" required>
             <option value="Freestyle">Freestyle</option>
             <option value="Racing">Racing</option>
+            <option value="Cinematic">Cinematic</option>
         </select>
 
-        <label>โหมด</label>
-        <select name="mode">
+        <label>โหมดการวิเคราะห์</label>
+        <select name="mode" required>
             <option value="Basic">Basic</option>
             <option value="Advanced">Advanced</option>
             <option value="Pro">Pro</option>
@@ -44,12 +53,15 @@ function copyText(id) {
         <button type="submit">วิเคราะห์</button>
     </form>
 
+    <!-- RESULT -->
     {% if analysis %}
     <div class="result-card">
+
         <h2>🔍 ผลลัพธ์การวิเคราะห์</h2>
+
         <p><strong>ภาพรวม:</strong> {{ analysis['overview'] }}</p>
 
-        <h3>คำแนะนำพื้นฐาน:</h3>
+        <h3>คำแนะนำพื้นฐาน</h3>
         <ul>
             {% for tip in analysis['basic_tips'] %}
             <li>{{ tip }}</li>
@@ -57,29 +69,39 @@ function copyText(id) {
         </ul>
 
         {% if analysis.get('advanced') %}
-        <h3>โหมด {{ request.form['mode'] }}:</h3>
-        <p id="pid">PID: P={{ analysis['advanced']['PID']['P'] }}, I={{ analysis['advanced']['PID']['I'] }}, D={{ analysis['advanced']['PID']['D'] }}</p>
+        <h3>โหมด {{ request.form['mode'] }}</h3>
+
+        <p id="pid">
+            PID → P={{ analysis['advanced']['PID']['P'] }},
+            I={{ analysis['advanced']['PID']['I'] }},
+            D={{ analysis['advanced']['PID']['D'] }}
+        </p>
         <button onclick="copyText('pid')">Copy PID</button>
 
-        <p id="filter">Filter: {{ analysis['advanced']['Filter'] }}</p>
+        <p id="filter">
+            Filter → {{ analysis['advanced']['Filter'] }}
+        </p>
         <button onclick="copyText('filter')">Copy Filter</button>
 
         <p><strong>Extra Tips:</strong> {{ analysis['advanced']['ExtraTips'] }}</p>
         {% endif %}
 
-        <h3>ข้อมูลเพิ่มเติม:</h3>
+        {% if analysis.get('notes') %}
+        <h3>หมายเหตุ</h3>
         <ul>
-            {% for info in analysis['info'] %}
-            <li>{{ info }}</li>
+            {% for note in analysis['notes'] %}
+            <li>{{ note }}</li>
             {% endfor %}
         </ul>
+        {% endif %}
+
     </div>
     {% endif %}
-</div>
 
-<footer>
-    <p>©OBIXConfig Lab</p>
-</footer>
+    <footer>
+        OBIXConfig Doctor • วิเคราะห์เพื่อการศึกษา ไม่แทนการทดสอบจริง
+    </footer>
 
+</main>
 </body>
 </html>
