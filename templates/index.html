@@ -1,107 +1,89 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OBIXConfig Doctor</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OBIXConfig Doctor</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 
-    <!-- CSS -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-
-    <!-- Copy to clipboard -->
-    <script>
-        function copyText(id) {
-            const text = document.getElementById(id).innerText;
-            navigator.clipboard.writeText(text);
-            alert("คัดลอกสำเร็จ!");
-        }
-    </script>
+<script>
+function copyText(id) {
+    const text = document.getElementById(id).innerText;
+    navigator.clipboard.writeText(text);
+    alert("คัดลอกเรียบร้อย");
+}
+</script>
 </head>
 
 <body>
-<main class="container">
+<div class="container">
 
-    <h1>🛠 OBIXConfig Doctor</h1>
-    <p class="subtitle">ผู้ช่วยวิเคราะห์ & แนะนำค่า FPV Config แบบมืออาชีพ</p>
+<h1>🛠 OBIXConfig Doctor</h1>
+<p class="subtitle">ผู้ช่วยวิเคราะห์ & แนะนำค่า FPV Config</p>
 
-    <!-- FORM -->
-    <form method="POST" class="form-card">
+<form method="POST" class="form-card">
 
-        <label>ขนาดโดรน (นิ้ว)</label>
-        <input type="number" name="size" placeholder="เช่น 5" required>
+    <label>ขนาดโดรน (นิ้ว)</label>
+    <input type="number" name="size" required placeholder="เช่น 5">
 
-        <label>แบตเตอรี่</label>
-        <select name="battery" required>
-            <option value="4S">4S</option>
-            <option value="6S">6S</option>
-        </select>
+    <label>แบตเตอรี่</label>
+    <select name="battery">
+        <option value="4S">4S</option>
+        <option value="6S">6S</option>
+    </select>
 
-        <label>สไตล์การบิน</label>
-        <select name="style" required>
-            <option value="Freestyle">Freestyle</option>
-            <option value="Racing">Racing</option>
-            <option value="Cinematic">Cinematic</option>
-        </select>
+    <label>สไตล์การบิน</label>
+    <select name="style">
+        <option value="Freestyle">Freestyle</option>
+        <option value="Racing">Racing</option>
+        <option value="Long Range">Long Range</option>
+    </select>
 
-        <label>โหมดการวิเคราะห์</label>
-        <select name="mode" required>
-            <option value="Basic">Basic</option>
-            <option value="Advanced">Advanced</option>
-            <option value="Pro">Pro</option>
-        </select>
+    <label>โหมดการวิเคราะห์</label>
+    <select name="mode">
+        <option value="Basic">Basic</option>
+        <option value="Advanced">Advanced</option>
+        <option value="Pro">Pro</option>
+    </select>
 
-        <button type="submit">วิเคราะห์</button>
-    </form>
+    <button type="submit">วิเคราะห์</button>
+</form>
 
-    <!-- RESULT -->
-    {% if analysis %}
-    <div class="result-card">
+{% if analysis %}
+<div class="result-card">
+    <h2>🔍 ผลการวิเคราะห์</h2>
 
-        <h2>🔍 ผลลัพธ์การวิเคราะห์</h2>
+    <p><strong>ภาพรวม:</strong> {{ analysis.overview }}</p>
 
-        <p><strong>ภาพรวม:</strong> {{ analysis['overview'] }}</p>
+    <h3>คำแนะนำพื้นฐาน</h3>
+    <ul>
+        {% for tip in analysis.basic_tips %}
+        <li>{{ tip }}</li>
+        {% endfor %}
+    </ul>
 
-        <h3>คำแนะนำพื้นฐาน</h3>
-        <ul>
-            {% for tip in analysis['basic_tips'] %}
-            <li>{{ tip }}</li>
-            {% endfor %}
-        </ul>
+    {% if analysis.advanced %}
+    <h3>ค่าขั้นสูง</h3>
 
-        {% if analysis.get('advanced') %}
-        <h3>โหมด {{ request.form['mode'] }}</h3>
+    <p id="pid">
+        PID → P: {{ analysis.advanced.PID.P }},
+        I: {{ analysis.advanced.PID.I }},
+        D: {{ analysis.advanced.PID.D }}
+    </p>
+    <button onclick="copyText('pid')">Copy PID</button>
 
-        <p id="pid">
-            PID → P={{ analysis['advanced']['PID']['P'] }},
-            I={{ analysis['advanced']['PID']['I'] }},
-            D={{ analysis['advanced']['PID']['D'] }}
-        </p>
-        <button onclick="copyText('pid')">Copy PID</button>
+    <p id="filter">Filter → {{ analysis.advanced.Filter }}</p>
+    <button onclick="copyText('filter')">Copy Filter</button>
 
-        <p id="filter">
-            Filter → {{ analysis['advanced']['Filter'] }}
-        </p>
-        <button onclick="copyText('filter')">Copy Filter</button>
-
-        <p><strong>Extra Tips:</strong> {{ analysis['advanced']['ExtraTips'] }}</p>
-        {% endif %}
-
-        {% if analysis.get('notes') %}
-        <h3>หมายเหตุ</h3>
-        <ul>
-            {% for note in analysis['notes'] %}
-            <li>{{ note }}</li>
-            {% endfor %}
-        </ul>
-        {% endif %}
-
-    </div>
+    <p><strong>Extra Tips:</strong> {{ analysis.advanced.ExtraTips }}</p>
     {% endif %}
+</div>
+{% endif %}
 
-    <footer>
-        OBIXConfig Doctor • วิเคราะห์เพื่อการศึกษา ไม่แทนการทดสอบจริง
-    </footer>
+<footer>
+    OBIXConfig Lab © 2025
+</footer>
 
-</main>
+</div>
 </body>
 </html>
