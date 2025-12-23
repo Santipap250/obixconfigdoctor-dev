@@ -1,125 +1,90 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-    <meta charset="UTF-8">
-    <title>OBIXConfig Doctor</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<title>OBIXConfig Doctor</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 
-    <script>
-        function copyText(id) {
-            const text = document.getElementById(id).innerText;
-            navigator.clipboard.writeText(text);
-            alert("คัดลอกไปใช้ใน Betaflight CLI แล้ว");
-        }
-    </script>
+<script>
+function copyText(id) {
+    const text = document.getElementById(id).innerText;
+    navigator.clipboard.writeText(text);
+    alert("คัดลอกไปใช้ใน Betaflight ได้แล้ว");
+}
+</script>
 </head>
+
 <body>
-
 <div class="container">
-    <h1>🛠 OBIXConfig Doctor</h1>
-    <p class="subtitle">
-        วิเคราะห์ & แนะนำค่า PID / Filter สำหรับโดรน FPV<br>
-        ใช้งานได้จริง เหมาะทั้งมือใหม่และมือเก่า
-    </p>
 
-    <!-- ===== FORM ===== -->
-    <form method="POST" class="form-card">
-        <label>ขนาดโดรน (นิ้ว)</label>
-        <input type="number" name="size" placeholder="เช่น 5" required>
+<h1>🛠 OBIXConfig Doctor</h1>
+<p class="subtitle">วิเคราะห์ค่า PID & Filter สำหรับ FPV Drone</p>
 
-        <label>แบตเตอรี่</label>
-        <select name="battery">
-            <option value="4S">4S</option>
-            <option value="6S">6S</option>
-        </select>
+<form method="POST" class="form-card">
+    <label>ขนาดโดรน (นิ้ว)</label>
+    <input type="number" name="size" placeholder="เช่น 5" required>
 
-        <label>สไตล์การบิน</label>
-        <select name="style">
-            <option value="freestyle">Freestyle (สมดุล)</option>
-            <option value="longrange">Long Range / Cinematic</option>
-            <option value="racing">Racing (ตอบสนองไว)</option>
-        </select>
+    <label>แบตเตอรี่</label>
+    <select name="battery">
+        <option value="4S">4S</option>
+        <option value="6S">6S</option>
+    </select>
 
-        <button type="submit">วิเคราะห์</button>
-    </form>
+    <label>สไตล์การบิน</label>
+    <select name="style">
+        <option value="freestyle">Freestyle</option>
+        <option value="longrange">Long Range / Cinematic</option>
+        <option value="racing">Racing</option>
+    </select>
 
-    <!-- ===== RESULT ===== -->
-    {% if analysis %}
-    <div class="result-card">
-        <h2>🔍 ผลการวิเคราะห์</h2>
+    <button type="submit">วิเคราะห์</button>
+</form>
 
-        <p><strong>ภาพรวม:</strong><br>
-        {{ analysis['overview'] }}
-        </p>
+{% if analysis %}
+<div class="result-card">
+<h2>🔍 ผลการวิเคราะห์</h2>
 
-        <h3>🎯 แนวคิดการตั้งค่า</h3>
-        <ul>
-            {% for tip in analysis['basic_tips'] %}
-            <li>{{ tip }}</li>
-            {% endfor %}
-        </ul>
+<p><strong>{{ analysis.overview }}</strong></p>
 
-        <!-- ===== PID ===== -->
-        <h3>⚙️ ค่า PID (แนะนำ)</h3>
-        <p id="pid">
-P Roll: {{ analysis['pid']['roll']['p'] }}
-I Roll: {{ analysis['pid']['roll']['i'] }}
-D Roll: {{ analysis['pid']['roll']['d'] }}
+<h3>แนวคิดการตั้งค่า</h3>
+<ul>
+{% for tip in analysis.basic_tips %}
+<li>{{ tip }}</li>
+{% endfor %}
+</ul>
 
-P Pitch: {{ analysis['pid']['pitch']['p'] }}
-I Pitch: {{ analysis['pid']['pitch']['i'] }}
-D Pitch: {{ analysis['pid']['pitch']['d'] }}
+<h3>⚙️ PID (ค่าแนะนำ)</h3>
+<pre id="pid">
+ROLL  P {{ analysis.pid.roll.p }}  I {{ analysis.pid.roll.i }}  D {{ analysis.pid.roll.d }}
+PITCH P {{ analysis.pid.pitch.p }} I {{ analysis.pid.pitch.i }} D {{ analysis.pid.pitch.d }}
+YAW   P {{ analysis.pid.yaw.p }}   I {{ analysis.pid.yaw.i }}
+</pre>
+<button onclick="copyText('pid')">Copy PID</button>
 
-P Yaw: {{ analysis['pid']['yaw']['p'] }}
-I Yaw: {{ analysis['pid']['yaw']['i'] }}
-D Yaw: {{ analysis['pid']['yaw']['d'] }}
-        </p>
-        <button onclick="copyText('pid')">Copy PID</button>
+<h3>🧠 Filter</h3>
+<pre id="filter">
+Gyro LPF2: {{ analysis.filter.gyro_lpf2 }} Hz
+D-Term LPF1: {{ analysis.filter.dterm_lpf1 }} Hz
+Dynamic Notch: {{ analysis.filter.dyn_notch }}
+</pre>
+<button onclick="copyText('filter')">Copy Filter</button>
 
-        <p class="hint">
-        • P = ความคมของการตอบสนอง<br>
-        • I = ความนิ่ง / การค้างองศา<br>
-        • D = ลดอาการสั่นและกระแทก
-        </p>
+<h3>💡 คำแนะนำเพิ่มเติม</h3>
+<ul>
+{% for ex in analysis.extra_tips %}
+<li>{{ ex }}</li>
+{% endfor %}
+</ul>
 
-        <!-- ===== FILTER ===== -->
-        <h3>🧠 Filter (ลดสั่น / คุม Noise)</h3>
-        <p id="filter">
-Gyro LPF1: OFF  
-Gyro LPF2: {{ analysis['filter']['gyro_lpf2'] }} Hz  
-
-D-Term LPF1: PT1 {{ analysis['filter']['dterm_lpf1'] }} Hz  
-D-Term LPF2: OFF  
-
-Dynamic Notch: {{ analysis['filter']['dyn_notch'] }} ตัว
-        </p>
-        <button onclick="copyText('filter')">Copy Filter</button>
-
-        <p class="hint">
-        • Filter ต่ำ = นุ่ม เงียบ ประหยัดไฟ<br>
-        • Filter สูง = คม เร็ว เหมาะสาย Racing
-        </p>
-
-        <!-- ===== EXTRA ===== -->
-        <h3>💡 คำแนะนำเพิ่มเติม</h3>
-        <ul>
-            {% for extra in analysis['extra_tips'] %}
-            <li>{{ extra }}</li>
-            {% endfor %}
-        </ul>
-
-        <p class="note">
-            ⚠️ หลังตั้งค่าใหม่ แนะนำบินทดสอบสั้น ๆ และจับมอเตอร์เช็กความร้อน
-        </p>
-    </div>
-    {% endif %}
-
-    <footer>
-        OBIXConfig Doctor • FPV Community Tool
-    </footer>
 </div>
+{% endif %}
 
+<footer>
+OBIXConfig Doctor • ใช้งานจริงสำหรับ Betaflight
+</footer>
+
+</div>
 </body>
 </html>
