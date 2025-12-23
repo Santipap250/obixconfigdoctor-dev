@@ -6,7 +6,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-
 <script>
 function copyText(id) {
     const text = document.getElementById(id).innerText;
@@ -18,13 +17,12 @@ function copyText(id) {
 
 <body>
 <div class="container">
-
 <h1>🛠 OBIXConfig Doctor</h1>
-<p class="subtitle">วิเคราะห์ค่า PID & Filter สำหรับ FPV Drone</p>
+<p class="subtitle">วิเคราะห์ค่า PID + Filter + ใบพัดสำหรับ FPV Drone</p>
 
 <form method="POST" class="form-card">
     <label>ขนาดโดรน (นิ้ว)</label>
-    <input type="number" name="size" placeholder="เช่น 5" required>
+    <input type="number" name="size" value="5" required>
 
     <label>แบตเตอรี่</label>
     <select name="battery">
@@ -39,6 +37,19 @@ function copyText(id) {
         <option value="racing">Racing</option>
     </select>
 
+    <label>ขนาดใบพัด (นิ้ว)</label>
+    <input type="number" step="0.1" name="prop_size" value="5" required>
+
+    <label>จำนวนใบ</label>
+    <select name="blades">
+        <option value="2">2 ใบ</option>
+        <option value="3" selected>3 ใบ</option>
+        <option value="4">4 ใบ</option>
+    </select>
+
+    <label>Pitch ใบพัด</label>
+    <input type="number" step="0.1" name="pitch" value="4.0" required>
+
     <button type="submit">วิเคราะห์</button>
 </form>
 
@@ -48,11 +59,12 @@ function copyText(id) {
 
 <p><strong>{{ analysis.overview }}</strong></p>
 
-<h3>แนวคิดการตั้งค่า</h3>
+<h3>💨 วิเคราะห์ใบพัด</h3>
+<p>{{ analysis.prop_analysis.summary }}</p>
 <ul>
-{% for tip in analysis.basic_tips %}
-<li>{{ tip }}</li>
-{% endfor %}
+    <li>Noise Level: {{ analysis.prop_analysis.impact.noise_level }}</li>
+    <li>Motor Load: {{ analysis.prop_analysis.impact.motor_load }}</li>
+    <li>Recommendation: {{ analysis.prop_analysis.recommendation }}</li>
 </ul>
 
 <h3>⚙️ PID (ค่าแนะนำ)</h3>
@@ -84,7 +96,6 @@ Dynamic Notch: {{ analysis.filter.dyn_notch }}
 <footer>
 OBIXConfig Doctor • ใช้งานจริงสำหรับ Betaflight
 </footer>
-
 </div>
 </body>
 </html>
