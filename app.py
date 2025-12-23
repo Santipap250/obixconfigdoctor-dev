@@ -1,20 +1,57 @@
 from flask import Flask, render_template, request
-from logic.doctor import analyze
 
 app = Flask(__name__)
 
-@app.route("/", methods=["GET", "POST"])
+# ฟังก์ชันวิเคราะห์โดรน
+def analyze_drone(size, battery, style, mode):
+    result = {}
+    
+    # วิเคราะห์เบื้องต้น
+    result['overview'] = f"โดรน {size} นิ้ว + {battery} + {style} → เหมาะกับการบิน"
+    
+    # คำแนะนำพื้นฐาน
+    result['basic_tips'] = [
+        "Throttle limit 90%",
+        "ใช้ prop ใบไม่จัดเกิน",
+        "ตรวจสอบความร้อนมอเตอร์"
+    ]
+    
+    # โหมด Advanced
+    if mode == 'Advanced':
+        result['advanced'] = {
+            'PID': {
+                'P': 40 + int(size),
+                'I': 30,
+                'D': 20
+            },
+            'Filter': "Lowpass 80Hz, Notch 150Hz",
+            'ExtraTips': "ปรับ D-term ลด 5–10% สำหรับการบิน Freestyle"
+        }
+    
+    # โหมด Pro
+    if mode == 'Pro':
+        result['advanced'] = {
+            'PID': {
+                'P': 45 + int(size),
+                'I': 35,
+                'D': 25
+            },
+            'Filter': "Lowpass 90Hz, Notch 180Hz",
+            'ExtraTips': "ใช้ prop เบา + ปรับ RPM motor ให้เข้ากับแบตเตอรี่"
+        }
+
+    return result
+
+@app.route('/', methods=['GET', 'POST'])
 def index():
-    result = None
-
-    if request.method == "POST":
-        size = request.form["size"]
-        battery = request.form["battery"]
-        style = request.form["style"]
-
-        result = analyze(size, battery, style)
-
-    return render_template("index.html", result=result)
+    analysis = None
+    if request.method == 'POST':
+        size = request.form.get('size')
+        battery = request.form.get('battery')
+        style = request.form.get('style')
+        mode = request.form.get('mode')
+        analysis = analyze_drone(size, battery, style, mode)
+    return render_template('index.html', analysis=analysis)
 
 if __name__ == "__main__":
-    app.run()
+    app.run(host="0.0.0.0", port=5000)
