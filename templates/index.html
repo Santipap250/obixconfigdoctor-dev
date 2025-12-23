@@ -2,16 +2,57 @@
 <html lang="th">
 <head>
     <meta charset="UTF-8">
-    <title>OBIX Config Doctor</title>
-    <link rel="stylesheet" href="/static/css/style.css">
+    <title>OBIXConfig Doctor</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
 
-<h1>🛠 OBIX Config Doctor</h1>
-<p>วาง Betaflight CLI แล้วให้ระบบช่วยตรวจ</p>
+<header>
+    <h1>🛠 OBIXConfig Doctor</h1>
+    <p>ผู้ช่วยวิเคราะห์ & แนะนำค่า FPV Config แบบเข้าใจง่าย</p>
+</header>
 
-<form method="post">
-    <textarea name="cli" placeholder="วาง CLI ที่นี่..."></textarea>
+<main>
+    <section class="card">
+        <h2>🔍 วิเคราะห์โดรนของคุณ</h2>
+
+        <form method="post">
+            <label>ขนาดโดรน (นิ้ว)</label>
+            <input type="number" name="size" placeholder="เช่น 5" required>
+
+            <label>แบตเตอรี่</label>
+            <select name="battery">
+                <option value="4S">4S</option>
+                <option value="6S">6S</option>
+            </select>
+
+            <label>สไตล์การบิน</label>
+            <select name="style">
+                <option value="freestyle">Freestyle</option>
+                <option value="longrange">Long Range</option>
+                <option value="smooth">Smooth / Cinematic</option>
+            </select>
+
+            <button type="submit">วิเคราะห์</button>
+        </form>
+    </section>
+
+    {% if result %}
+    <section class="card result">
+        <h2>📊 ผลการวิเคราะห์</h2>
+        <pre>{{ result }}</pre>
+    </section>
+    {% endif %}
+</main>
+
+<footer>
+    <p>© OBIXConfig Lab</p>
+</footer>
+
+</body>
+</html>
     <br><br>
     <button type="submit">วิเคราะห์</button>
 </form>
