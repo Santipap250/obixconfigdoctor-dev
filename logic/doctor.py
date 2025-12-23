@@ -1,16 +1,23 @@
-def analyze(cli):
-    if not cli:
-        return "❌ ยังไม่ได้วาง CLI"
+def analyze(size, battery, style):
+    advice = []
 
-    issues = []
+    size = int(size)
 
-    if "gyro_lowpass2_hz = 0" in cli:
-        issues.append("⚠️ ปิด Gyro LPF2 เสี่ยงสั่น")
+    if size >= 5:
+        advice.append("เหมาะกับการปรับ PID แบบไม่แข็งเกิน เพื่อประหยัดมอเตอร์")
+    else:
+        advice.append("โดรนเล็ก ควรเน้น Filter มากกว่าดัน PID")
 
-    if "throttle_limit_percent = 100" in cli:
-        issues.append("ℹ️ Throttle 100% กินแบต")
+    if battery == "6S":
+        advice.append("แนะนำ Throttle Limit 85–90% ลด heat")
+    else:
+        advice.append("4S คุม Throttle curve ให้เนียน จะบินได้นานขึ้น")
 
-    if not issues:
-        return "✅ ค่าโดยรวมดูโอเค"
+    if style == "freestyle":
+        advice.append("ลด D-term นิดหน่อย จะคุมคันง่าย")
+    elif style == "longrange":
+        advice.append("เพิ่ม Filter + ลด RPM noise จะประหยัดแบต")
+    else:
+        advice.append("เน้น Smooth → ลด Feedforward")
 
-    return "\n".join(issues)
+    return "\n".join(f"- {x}" for x in advice)
