@@ -1,5 +1,52 @@
 body {
     font-family: "Sarabun", sans-serif;
+    background: #f5f7fa;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+.container {
+    max-width: 600px;
+    margin: 30px auto;
+    padding: 20px;
+}
+h1 {
+    text-align: center;
+    color: #0077b6;
+}
+p {margin-bottom: 10px;}
+.form-card, .result-card {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    margin-top: 20px;
+}
+form label {display: block; margin-top: 15px;}
+form input, form select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+form button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 20px;
+    background: #0077b6;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
+button {margin-top: 8px;}
+.result-card h2 {color: #0077b6;}
+@media (max-width: 600px) {
+    .container {padding: 10px;}
+}body {
+    font-family: "Sarabun", sans-serif;
     background: #121212;
     color: #e0e0e0;
     margin: 0;
