@@ -1,5 +1,7 @@
-def analyze_battery(battery_type):
-    if battery_type=="4S":
-        return "สมดุล กำลังดี"
+def analyze_battery(battery):
+    if battery == "4S":
+        return "แรงดัน 4S (14.8V) มาตรฐาน FPV"
+    elif battery == "6S":
+        return "แรงดัน 6S (22.2V) สำหรับแรงขับสูง"
     else:
-        return "แรงกว่า ใช้ไฟมากขึ้น"
+        return "ไม่ทราบแบตเตอรี่"
