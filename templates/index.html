@@ -84,9 +84,18 @@ Dynamic Notch: {{ analysis.filter.dyn_notch }}
 </pre>
 <button onclick="copyText('filter')">Copy Filter</button>
 
+<h3>🛩️ ใบพัด</h3>
+<p>{{ analysis.prop_result.summary }}</p>
+<ul>
+<li>Noise: {{ analysis.prop_result.effect.noise }}</li>
+<li>Motor Load: {{ analysis.prop_result.effect.motor_load }}</li>
+<li>Grip: {{ analysis.prop_result.effect.grip }}</li>
+<li>Recommendation: {{ analysis.prop_result.recommendation }}</li>
+</ul>
+
 <h3>💡 Extra Tools</h3>
-<p>Thrust-to-Weight Ratio: {{ analysis.extra.thrust_ratio }}</p>
-<p>Battery Runtime Estimate: {{ analysis.extra.battery_runtime }} นาที</p>
+<p>Thrust-to-Weight Ratio: {{ analysis.thrust_ratio }}</p>
+<p>Battery Runtime Estimate: {{ analysis.battery_est }} นาที</p>
 
 <h3>📊 Visualization</h3>
 <canvas id="thrustChart" width="400" height="200"></canvas>
@@ -100,7 +109,7 @@ new Chart(thrustCtx, {
         labels: ['Thrust-to-Weight'],
         datasets: [{
             label: 'Ratio',
-            data: [{{ analysis.extra.thrust_ratio.split(':')[0] }}],
+            data: [{{ analysis.thrust_ratio }}],
             backgroundColor: ['rgba(54, 162, 235, 0.6)']
         }]
     },
@@ -114,7 +123,7 @@ new Chart(noiseCtx, {
         labels: ['Motor Load', 'Noise Level'],
         datasets: [{
             label: 'Effect',
-            data: [{{ analysis.prop_result.effect.motor_load }}, {{ analysis.prop_result.effect.noise_level }}],
+            data: [{{ analysis.prop_result.effect.motor_load }}, {{ analysis.prop_result.effect.noise }}],
             fill: false,
             borderColor: 'rgb(255, 99, 132)',
             tension: 0.3
