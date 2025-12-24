@@ -1,0 +1,106 @@
+/* ===================== BODY ===================== */
+body {
+    font-family: "Sarabun", sans-serif;
+    background: #0d1117;
+    color: #c9d1d9;
+    margin: 0;
+    padding: 0;
+}
+
+/* ===================== CONTAINER ===================== */
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 15px;
+}
+
+/* ===================== HEADINGS ===================== */
+h1 {
+    text-align: center;
+    color: #58a6ff;
+    margin-bottom: 5px;
+}
+.subtitle {
+    text-align: center;
+    color: #8b949e;
+    margin-bottom: 20px;
+}
+
+/* ===================== FORM CARD ===================== */
+.form-card, .result-card {
+    background: #161b22;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+    margin-bottom: 25px;
+    transition: transform 0.2s;
+}
+.form-card:hover, .result-card:hover {
+    transform: translateY(-3px);
+}
+
+/* ===================== FORM ELEMENTS ===================== */
+form label {
+    display: block;
+    margin-top: 12px;
+    color: #8b949e;
+}
+form input, form select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 8px;
+    border: 1px solid #30363d;
+    background: #0d1117;
+    color: #c9d1d9;
+    font-size: 15px;
+}
+form input:focus, form select:focus {
+    outline: none;
+    border-color: #58a6ff;
+    box-shadow: 0 0 8px #58a6ff50;
+}
+
+/* ===================== BUTTON ===================== */
+form button {
+    width: 100%;
+    padding: 14px;
+    margin-top: 20px;
+    background: #238636;
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+form button:hover {
+    background: #2ea043;
+}
+
+/* ===================== RESULT CARD ===================== */
+.result-card h2, .result-card h3 {
+    color: #58a6ff;
+}
+.result-card pre {
+    background: #0d1117;
+    padding: 12px;
+    border-radius: 8px;
+    overflow-x: auto;
+    border: 1px solid #30363d;
+}
+.result-card ul {
+    padding-left: 20px;
+}
+.result-card ul li {
+    margin-bottom: 6px;
+}
+
+/* ===================== FOOTER ===================== */
+footer {
+    text-align: center;
+    margin-top: 25px;
+    padding: 12px 0;
+    color: #8b949e;
+    border-top: 1px solid #30363d;
+}
