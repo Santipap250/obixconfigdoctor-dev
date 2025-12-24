@@ -1,2 +1,2 @@
-Flask        
-gunic
+Flask
+gunicorn
