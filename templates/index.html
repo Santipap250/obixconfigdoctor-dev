@@ -7,15 +7,69 @@
 
 <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+:root {
+    --bg-color-light: #f5f5f5;
+    --text-color-light: #111;
+    --card-color-light: #fff;
+
+    --bg-color-dark: #121212;
+    --text-color-dark: #eee;
+    --card-color-dark: #1e1e1e;
+}
+
+body.light {
+    background-color: var(--bg-color-light);
+    color: var(--text-color-light);
+}
+
+body.light .container, body.light .form-card, body.light .result-card {
+    background-color: var(--card-color-light);
+}
+
+body.dark {
+    background-color: var(--bg-color-dark);
+    color: var(--text-color-dark);
+}
+
+body.dark .container, body.dark .form-card, body.dark .result-card {
+    background-color: var(--card-color-dark);
+}
+
+button.toggle-theme {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    padding: 6px 12px;
+    cursor: pointer;
+}
+</style>
+
 <script>
 function copyText(id) {
     const text = document.getElementById(id).innerText;
     navigator.clipboard.writeText(text);
     alert("คัดลอกไปใช้ใน Betaflight ได้แล้ว");
 }
+
+// Dark/Light toggle
+function toggleTheme() {
+    document.body.classList.toggle('dark');
+    document.body.classList.toggle('light');
+    localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+}
+
+window.onload = () => {
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    document.body.classList.add(savedTheme);
+}
 </script>
 </head>
+
 <body>
+<button class="toggle-theme" onclick="toggleTheme()">🌗 เปลี่ยนธีม</button>
+
 <div class="container">
 <h1>🛠 OBIXConfig Doctor</h1>
 <p class="subtitle">วิเคราะห์ค่า PID, Filter และใบพัด สำหรับ FPV Drone</p>
