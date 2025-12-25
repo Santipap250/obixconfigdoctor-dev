@@ -88,16 +88,26 @@ const steps = [
   "ใกล้เสร็จแล้ว..."
 ];
 
-let i = 0;
-setInterval(()=>{
-  document.getElementById("status").innerText = steps[i % steps.length];
-  i++;
-},1200);
+let stepIndex = 0;
+setInterval(() => {
+  document.getElementById("status").innerText =
+    steps[stepIndex % steps.length];
+  stepIndex++;
+}, 1200);
 
-// เช็ค backend พร้อมหรือยัง
-fetch("/ping")
-  .then(r=>r.ok && window.location.replace("/app"))
-  .catch(()=>{});
+// 🔥 สำคัญ: เช็ค backend แบบวนซ้ำ (แก้ cold start)
+function checkBackend(){
+  fetch("/ping", { cache: "no-store" })
+    .then(res => {
+      if (res.ok) {
+        window.location.replace("/app");
+      }
+    })
+    .catch(() => {});
+}
+
+// เช็คทุก 1.5 วิ
+setInterval(checkBackend, 1500);
 </script>
 </body>
 </html>
