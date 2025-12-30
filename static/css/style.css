@@ -159,12 +159,6 @@ footer {
   box-shadow: 0 10px 30px rgba(0,0,0,0.45);
 }
 
-.logo {
-  width: 46px;
-  height: 46px;
-  object-fit: contain;
-}
-
 .title-group h1 {
   margin: 0;
   font-size: 1.35rem;
@@ -202,4 +196,5 @@ footer {
 .logo {
   width: 58px;
   height: 58px;
+    object-fit: contain;
 }
