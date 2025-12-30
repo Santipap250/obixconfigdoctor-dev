@@ -152,7 +152,7 @@ footer {
   display: flex;
   align-items: center;
   gap: 14px;
-  padding: 16px 20px;
+  padding: 22px 20px;
   margin-bottom: 20px;
   border-radius: 16px;
   background: linear-gradient(135deg, #161b22, #0d1117);
@@ -195,6 +195,6 @@ footer {
 
 .logo {
   width: 110px;
-  height: 200px;
+  height: 110px;
     object-fit: contain;
 }
