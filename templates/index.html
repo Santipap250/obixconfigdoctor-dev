@@ -68,19 +68,12 @@ window.onload = () => {
 </head>
 
 <body>
-    <header class="top-bar">
-  <img
-    src="{{ url_for('static', filename='img/obix-logo.png') }}"
-    class="logo"
-    alt="OBIX Config Doctor Logo"
-  >
-  <div class="title-group">
-    <h1>OBIXConfig Doctor</h1>
-    <span class="subtitle">FPV • Betaflight • Smart Config</span>
-  </div>
-    </header>
-    
-<button class="toggle-theme" onclick="toggleTheme()">🌗 เปลี่ยนธีม</button>
+
+<div class="top-bar center-logo">
+  <img src="{{ url_for('static', filename='img/obix-logo.png') }}" class="logo">
+
+  <button class="toggle-theme" onclick="toggleTheme()">🌗</button>
+</div>
 
 <div class="container">
 
