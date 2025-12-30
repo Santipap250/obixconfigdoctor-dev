@@ -153,12 +153,13 @@ footer {
   align-items: center;
   justify-content: center;
   gap: 14px;
-  padding: 40px 20px;
-  margin-bottom: 24px;
+  padding: 24px 16px;
+  margin-bottom: 20px;
   border-radius: 18px;
 
   background: linear-gradient(135deg, #161b22, #0d1117);
-  box-shadow: 0 12px 40px rgba(0,0,0,0.55);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.45);
+max-height: 220px;
 }
 
 .title-group h1 {
@@ -186,6 +187,8 @@ footer {
 }
 
 .center-logo {
+max-width: 360px;
+  width: 100%;
   justify-content: center;
   position: relative;
 }
