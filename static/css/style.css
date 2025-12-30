@@ -153,14 +153,15 @@ footer {
   align-items: center;
   justify-content: center;
   gap: 14px;
-  padding: 24px 16px;
+  padding: 22px 16px;
   padding-top: 20px;
   padding-bottom: 20px;
   margin-bottom: 20px;
-  border-radius: 18px;
+  max-height: 200px;
+  border-radius: 16px;
 
   background: linear-gradient(135deg, #161b22, #0d1117);
-  box-shadow: 0 12px 28px rgba(0,0,0,0.45);
+  box-shadow: 0 10px 28px rgba(0,0,0,0.45);
 max-height: 220px;
 }
 
@@ -189,6 +190,9 @@ max-height: 220px;
 }
 
 .center-logo {
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
   justify-content: center;
   position: relative;
 }
@@ -199,15 +203,16 @@ max-height: 220px;
 }
 
 .logo {
-  width: 90px;
-  height: 90px;
+  width: 1800px;
+  height: auto;
+  max-width: 180px;
   object-fit: contain;
 
   /* glow เบา ๆ */
-  filter: drop-shadow(0 0 10px rgba(0, 255, 180, 0.35))
-          drop-shadow(0 0 26px rgba(0, 255, 180, 0.25));
+  filter: drop-shadow(0 0 12px rgba(0, 255, 180, 0.4))
+          drop-shadow(0 0 30px rgba(0, 255, 180, 0.25));
 
-  transition: transform 0.3s ease, filter 0.3s ease;
+  transition: transform 0.25s ease, filter 0.25s ease;
 }
 
 .logo:hover {
