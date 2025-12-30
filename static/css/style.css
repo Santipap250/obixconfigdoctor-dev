@@ -220,3 +220,44 @@ max-height: 220px;
   filter: drop-shadow(0 0 16px rgba(0, 255, 180, 0.55))
           drop-shadow(0 0 36px rgba(0, 255, 180, 0.4));
 }
+.community-box {
+  margin-top: 30px;
+  padding: 22px 18px;
+  text-align: center;
+
+  background: linear-gradient(135deg, #10161d, #0b0f14);
+  border: 1px solid #1f2933;
+  border-radius: 16px;
+
+  box-shadow: 0 10px 30px rgba(0,0,0,0.45);
+}
+
+.community-text {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: #c9d1d9;
+  margin-bottom: 18px;
+}
+
+.community-text .highlight {
+  color: #4cffc0;
+}
+
+.community-btn {
+  display: inline-block;
+  padding: 12px 22px;
+
+  background: linear-gradient(135deg, #1877f2, #145dbf);
+  color: #fff;
+  font-weight: 600;
+  border-radius: 10px;
+  text-decoration: none;
+
+  box-shadow: 0 6px 18px rgba(24,119,242,0.45);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.community-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 26px rgba(24,119,242,0.6);
+}
