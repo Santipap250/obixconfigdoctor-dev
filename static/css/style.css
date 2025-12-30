@@ -188,3 +188,18 @@ footer {
 .toggle-theme:hover {
   background: #1f2933;
 }
+
+.center-logo {
+  justify-content: center;
+  position: relative;
+}
+
+.center-logo .toggle-theme {
+  position: absolute;
+  right: 16px;
+}
+
+.logo {
+  width: 58px;
+  height: 58px;
+}
