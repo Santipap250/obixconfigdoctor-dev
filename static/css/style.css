@@ -9,7 +9,7 @@ body {
 
 /* ===================== CONTAINER ===================== */
 .container {
-    max-width: 800px;
+    max-width: 860px;
     margin: 20px auto;
     padding: 15px;
 }
@@ -145,4 +145,46 @@ footer {
 .summary-item .value {
   font-size: 1.1rem;
   font-weight: bold;
+}
+
+/* ===================== TOP HEADER ===================== */
+.top-bar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 20px;
+  margin-bottom: 20px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #161b22, #0d1117);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.45);
+}
+
+.logo {
+  width: 46px;
+  height: 46px;
+  object-fit: contain;
+}
+
+.title-group h1 {
+  margin: 0;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #58a6ff;
+}
+
+.title-group .subtitle {
+  font-size: 0.75rem;
+  color: #8b949e;
+}
+
+/* ===================== THEME TOGGLE BUTTON ===================== */
+.toggle-theme {
+  background: #161b22;
+  color: #c9d1d9;
+  border: 1px solid #30363d;
+  border-radius: 8px;
+}
+
+.toggle-theme:hover {
+  background: #1f2933;
 }
