@@ -64,6 +64,11 @@ window.onload = () => {
     const savedTheme = localStorage.getItem('theme') || 'light';
     document.body.classList.add(savedTheme);
 }
+
+function toggleConcept() {
+  const box = document.querySelector('.concept-box');
+  box.classList.toggle('open');
+}
 </script>
 </head>
 
