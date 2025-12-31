@@ -374,6 +374,9 @@ max-height: 220px;
 }
 
 /* opened state */
+.concept-box .concept-content {
+  display: none;
+}
 .concept-box.open .concept-content {
   display: block;
 }
