@@ -313,3 +313,72 @@ max-height: 220px;
   color: #8b949e;
   opacity: 0.85;
 }
+
+/* ===================== CONFIG CONCEPT (COLLAPSIBLE) ===================== */
+.concept-box {
+  margin: 24px auto;
+  max-width: 860px;
+  background: linear-gradient(135deg, #0f1511, #0b0f0c);
+  border-radius: 16px;
+  border: 1px solid #1f2a23;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.45);
+  overflow: hidden;
+}
+
+.concept-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.concept-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #58ffa8;
+}
+
+.concept-icon {
+  font-size: 1.2rem;
+  opacity: 0.85;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.concept-content {
+  padding: 0 20px 18px;
+  display: none;
+}
+
+.concept-content p {
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: #c9d1d9;
+}
+
+.concept-content ul {
+  margin: 12px 0;
+  padding-left: 20px;
+}
+
+.concept-content ul li {
+  margin-bottom: 6px;
+  font-size: 0.85rem;
+}
+
+.concept-note {
+  font-size: 0.78rem;
+  color: #8b949e;
+  opacity: 0.85;
+}
+
+/* opened state */
+.concept-box.open .concept-content {
+  display: block;
+}
+
+.concept-box.open .concept-icon {
+  transform: rotate(180deg);
+  opacity: 1;
+}
