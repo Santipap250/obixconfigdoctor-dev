@@ -72,6 +72,49 @@ function toggleConcept() {
 </script>
 </head>
 
+<script>
+const presets = {
+  beginner: `
+# OBIXConfig Lab - Beginner Preset
+set throttle_limit_percent = 85
+set dshot_bidir = OFF
+set iterm_relax = RP
+set feedforward_transition = 0
+set anti_gravity_gain = 3
+save
+`,
+
+  freestyle: `
+# OBIXConfig Lab - Freestyle Preset
+set throttle_limit_percent = 100
+set iterm_relax = RPY
+set feedforward_transition = 0.5
+set anti_gravity_gain = 5
+save
+`,
+
+  longrange: `
+# OBIXConfig Lab - Long Range Preset
+set throttle_limit_percent = 80
+set iterm_relax = OFF
+set feedforward_transition = 0
+set anti_gravity_gain = 2
+save
+`
+};
+
+function showPreset(type) {
+  document.getElementById("cliOutput").textContent = presets[type];
+}
+
+function copyCLI() {
+  const text = document.getElementById("cliOutput").textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    alert("คัดลอก CLI เรียบร้อยแล้ว 🚀");
+  });
+}
+</script>
+
 <body>
 <div class="top-bar center-logo">
   <img src="{{ url_for('static', filename='img/obix-logo.png') }}" class="logo">
@@ -189,7 +232,7 @@ function toggleConcept() {
   <h3>🎛 Preset แนะนำจาก OBIXConfig Lab</h3>
 
   <div class="preset-grid">
-    <div class="preset-item beginner">
+    <div class="preset-item beginner" onclick="showPreset('beginner')">
       <h4>🟢 Beginner / Smooth</h4>
       <p>บินนิ่ง คุมง่าย ลดอาการสั่น เหมาะกับมือใหม่</p>
       <ul>
@@ -199,7 +242,7 @@ function toggleConcept() {
       </ul>
     </div>
 
-    <div class="preset-item freestyle">
+    <div class="preset-item freestyle" onclick="showPreset('freestyle')">
       <h4>🔵 Freestyle</h4>
       <p>ตอบสนองไว คุมแม่น เหมาะกับตีท่าบินสนุก</p>
       <ul>
@@ -209,7 +252,7 @@ function toggleConcept() {
       </ul>
     </div>
 
-    <div class="preset-item longrange">
+    <div class="preset-item longrange" onclick="showPreset('longrange')">
       <h4>🟣 Long-Range</h4>
       <p>ประหยัดไฟ นิ่ง ลอยได้นาน</p>
       <ul>
