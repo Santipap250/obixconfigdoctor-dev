@@ -447,3 +447,52 @@ max-height: 220px;
   font-size: 0.75rem;
   color: #8b949e;
 }
+/* ===================== CLI BOX ===================== */
+.cli-box {
+  margin: 30px auto;
+  padding: 22px;
+  max-width: 860px;
+
+  background: linear-gradient(135deg, #0d1117, #0b0f0c);
+  border-radius: 18px;
+  border: 1px solid #30363d;
+  box-shadow: 0 12px 35px rgba(0,0,0,0.55);
+}
+
+.cli-box h3 {
+  margin-top: 0;
+  margin-bottom: 14px;
+  text-align: center;
+  color: #58a6ff;
+}
+
+#cliOutput {
+  background: #010409;
+  color: #c9d1d9;
+  padding: 16px;
+  border-radius: 12px;
+  border: 1px solid #30363d;
+  font-size: 0.8rem;
+  min-height: 140px;
+  overflow-x: auto;
+}
+
+.copy-btn {
+  margin-top: 14px;
+  width: 100%;
+  padding: 12px;
+
+  background: linear-gradient(135deg, #238636, #2ea043);
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.copy-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(46,160,67,0.45);
+}
