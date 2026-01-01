@@ -145,33 +145,40 @@ function toggleConcept() {
 </form>
 
 {% if analysis %}
-<section class="flight-summary">
-  <h2>🔍 Flight Summary</h2>
+<section class="quick-summary">
+  <div class="qs-header">
+    🧾 สรุปภาพรวม (Quick Summary)
+  </div>
 
-  <p class="summary-main">
+  <div class="qs-grid">
+    <div class="qs-item">
+      <span class="qs-label">สไตล์การบิน</span>
+      <span class="qs-value">{{ analysis.style }}</span>
+    </div>
+
+    <div class="qs-item">
+      <span class="qs-label">ระดับน้ำหนัก</span>
+      <span class="qs-value">{{ analysis.weight_class }}</span>
+    </div>
+
+    <div class="qs-item">
+      <span class="qs-label">แรงขับโดยรวม</span>
+      <span class="qs-value">{{ analysis.thrust_ratio }}</span>
+    </div>
+
+    <div class="qs-item">
+      <span class="qs-label">เวลาบินโดยประมาณ</span>
+      <span class="qs-value">{{ analysis.flight_time }} นาที</span>
+    </div>
+  </div>
+
+  <div class="qs-advice">
+    💡 <strong>คำแนะนำสั้น ๆ:</strong><br>
     {{ analysis.summary }}
-  </p>
+  </div>
 
-  <div class="summary-grid">
-    <div class="summary-item">
-      <span class="label">Style</span>
-      <span class="value">{{ analysis.style }}</span>
-    </div>
-
-    <div class="summary-item">
-      <span class="label">Weight Class</span>
-      <span class="value">{{ analysis.weight_class }}</span>
-    </div>
-
-    <div class="summary-item">
-      <span class="label">Power Ratio</span>
-      <span class="value">{{ analysis.thrust_ratio }}</span>
-    </div>
-
-    <div class="summary-item">
-      <span class="label">Est. Flight Time</span>
-      <span class="value">{{ analysis.flight_time }} min</span>
-    </div>
+  <div class="qs-warning">
+    ⚠️ ค่านี้เป็นค่าเริ่มต้น แนะนำทดสอบบินจริงก่อนปรับเพิ่ม–ลด
   </div>
 </section>
 <div class="result-card">
