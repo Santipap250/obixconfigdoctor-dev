@@ -157,9 +157,7 @@ footer {
   padding-top: 20px;
   padding-bottom: 20px;
   margin-bottom: 20px;
-  max-height: 200px;
   border-radius: 16px;
-
   background: linear-gradient(135deg, #161b22, #0d1117);
   box-shadow: 0 10px 28px rgba(0,0,0,0.45);
 max-height: 220px;
@@ -203,9 +201,8 @@ max-height: 220px;
 }
 
 .logo {
-  width: 1800px;
+  width: 180px;
   height: auto;
-  max-width: 180px;
   object-fit: contain;
 
   /* glow เบา ๆ */
