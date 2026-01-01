@@ -384,6 +384,7 @@ max-height: 220px;
   font-weight: 700;
   color: #58a6ff;
 }
+
 /* ===================== PRESET BOX ===================== */
 .preset-box {
   margin: 30px auto;
@@ -462,7 +463,6 @@ max-height: 220px;
   opacity: 0.85;
 }
 
-/* ===================== PRESET BOX ===================== */
 .preset-box {
   margin: 28px 0;
   padding: 22px;
