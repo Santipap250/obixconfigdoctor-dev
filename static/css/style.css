@@ -384,6 +384,68 @@ max-height: 220px;
   font-weight: 700;
   color: #58a6ff;
 }
+/* ===================== PRESET BOX ===================== */
+.preset-box {
+  margin: 30px auto;
+  padding: 24px;
+  max-width: 860px;
+  background: linear-gradient(135deg, #0f1511, #0b0f0c);
+  border-radius: 18px;
+  border: 1px solid #1f2a23;
+  box-shadow: 0 12px 35px rgba(0,0,0,0.5);
+}
+
+.preset-box h3 {
+  margin-top: 0;
+  margin-bottom: 18px;
+  color: #58ffa8;
+  text-align: center;
+}
+
+.preset-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.preset-item {
+  background: #0d1117;
+  padding: 16px;
+  border-radius: 14px;
+  border: 1px solid #30363d;
+}
+
+.preset-item h4 {
+  margin-top: 0;
+  margin-bottom: 8px;
+}
+
+.preset-item p {
+  font-size: 0.85rem;
+  color: #c9d1d9;
+}
+
+.preset-item ul {
+  padding-left: 18px;
+  margin-top: 10px;
+}
+
+.preset-item ul li {
+  font-size: 0.8rem;
+  margin-bottom: 6px;
+}
+
+/* สีแยกประเภท */
+.preset-item.beginner h4 { color: #4cff4c; }
+.preset-item.freestyle h4 { color: #58a6ff; }
+.preset-item.longrange h4 { color: #d2a8ff; }
+
+.preset-note {
+  margin-top: 16px;
+  text-align: center;
+  font-size: 0.75rem;
+  color: #8b949e;
+}
 
 .qs-advice {
   background: #0d1a12;
