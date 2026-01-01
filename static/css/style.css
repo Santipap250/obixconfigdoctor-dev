@@ -272,48 +272,6 @@ max-height: 220px;
   opacity: 0.85;
 }
 
-/* ===================== CONFIG CONCEPT BOX ===================== */
-.concept-box {
-  margin: 28px auto;
-  padding: 22px 24px;
-  max-width: 860px;
-
-  background: linear-gradient(135deg, #0f1511, #0b0f0c);
-  border-radius: 16px;
-  border: 1px solid #1f2a23;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.45);
-}
-
-.concept-box h3 {
-  margin-top: 0;
-  margin-bottom: 10px;
-  color: #58ffa8;
-  font-size: 1.1rem;
-}
-
-.concept-box p {
-  font-size: 0.9rem;
-  line-height: 1.6;
-  color: #c9d1d9;
-}
-
-.concept-box ul {
-  margin: 14px 0;
-  padding-left: 20px;
-}
-
-.concept-box ul li {
-  margin-bottom: 8px;
-  font-size: 0.88rem;
-}
-
-.concept-note {
-  margin-top: 14px;
-  font-size: 0.8rem;
-  color: #8b949e;
-  opacity: 0.85;
-}
-
 /* ===================== CONFIG CONCEPT (COLLAPSIBLE) ===================== */
 .concept-box {
   margin: 24px auto;
@@ -384,4 +342,63 @@ max-height: 220px;
 .concept-box.open .concept-icon {
   transform: rotate(180deg);
   opacity: 1;
+}
+
+/* ===================== QUICK SUMMARY ===================== */
+.quick-summary {
+  background: linear-gradient(135deg, #10151c, #0d1117);
+  border-radius: 18px;
+  padding: 22px;
+  margin-bottom: 28px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.55);
+  border: 1px solid #1f2933;
+}
+
+.qs-header {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 14px;
+  color: #4cff4c;
+}
+
+.qs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.qs-item {
+  background: #0f151d;
+  border-radius: 12px;
+  padding: 12px;
+  text-align: center;
+}
+
+.qs-label {
+  display: block;
+  font-size: 0.75rem;
+  color: #8b949e;
+  margin-bottom: 4px;
+}
+
+.qs-value {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #58a6ff;
+}
+
+.qs-advice {
+  background: #0d1a12;
+  border-left: 4px solid #2ea043;
+  padding: 12px 14px;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+}
+
+.qs-warning {
+  font-size: 0.75rem;
+  color: #8b949e;
+  opacity: 0.85;
 }
