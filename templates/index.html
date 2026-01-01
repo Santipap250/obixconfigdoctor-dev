@@ -184,7 +184,45 @@ function toggleConcept() {
 <div class="result-card">
 <h2>🔍 ผลการวิเคราะห์</h2>
 <p><strong>{{ analysis.overview }}</strong></p>
+<div class="preset-box">
+  <h3>🎛 Preset แนะนำจาก OBIXConfig Lab</h3>
 
+  <div class="preset-grid">
+    <div class="preset-item beginner">
+      <h4>🟢 Beginner / Smooth</h4>
+      <p>บินนิ่ง คุมง่าย ลดอาการสั่น เหมาะกับมือใหม่</p>
+      <ul>
+        <li>Throttle Limit: 85%</li>
+        <li>Rates: ต่ำ–กลาง</li>
+        <li>Filter: เน้นนุ่ม</li>
+      </ul>
+    </div>
+
+    <div class="preset-item freestyle">
+      <h4>🔵 Freestyle</h4>
+      <p>ตอบสนองไว คุมแม่น เหมาะกับตีท่าบินสนุก</p>
+      <ul>
+        <li>Throttle Limit: 90–100%</li>
+        <li>Rates: กลาง–สูง</li>
+        <li>Filter: สมดุล</li>
+      </ul>
+    </div>
+
+    <div class="preset-item longrange">
+      <h4>🟣 Long-Range</h4>
+      <p>ประหยัดไฟ นิ่ง ลอยได้นาน</p>
+      <ul>
+        <li>Throttle Limit: 80–85%</li>
+        <li>Rates: ต่ำ</li>
+        <li>Filter: ประหยัดพลังงาน</li>
+      </ul>
+    </div>
+  </div>
+
+  <p class="preset-note">
+    * Preset เหล่านี้เป็นแนวทางเริ่มต้น สามารถนำไปปรับต่อให้เหมาะกับโดรนของคุณ
+  </p>
+</div>
 <h3>แนวคิดการตั้งค่า</h3>
 <ul>
 {% for tip in analysis.basic_tips %}
