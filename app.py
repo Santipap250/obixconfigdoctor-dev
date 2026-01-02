@@ -21,7 +21,7 @@ def analyze_drone(size, battery, style, prop_result, weight):
         "เช็คจุดบัดกรี ESC และแบตเตอรี่"
     ]
 
-    # PID + Filter
+    # ================= PID / FILTER ตามสไตล์ =================
     if style == "freestyle":
         pid = {
             "roll": {"p":48,"i":52,"d":38},
@@ -29,7 +29,7 @@ def analyze_drone(size, battery, style, prop_result, weight):
             "yaw":{"p":40,"i":45,"d":0}
         }
         filter_desc = {"gyro_lpf2":90,"dterm_lpf1":120,"dyn_notch":2}
-        extra_tips = ["Freestyle, สมดุล แรงพอดี"]
+        extra_tips = ["Freestyle – สมดุล บินสนุก"]
 
     elif style == "racing":
         pid = {
@@ -38,26 +38,37 @@ def analyze_drone(size, battery, style, prop_result, weight):
             "yaw":{"p":50,"i":40,"d":0}
         }
         filter_desc = {"gyro_lpf2":120,"dterm_lpf1":150,"dyn_notch":3}
-        extra_tips = ["Racing, ตอบสนองไว"]
+        extra_tips = ["Racing – ตอบสนองไว"]
 
-    else:
+    else:  # longrange
         pid = {
             "roll": {"p":42,"i":50,"d":32},
             "pitch":{"p":42,"i":50,"d":32},
             "yaw":{"p":35,"i":45,"d":0}
         }
         filter_desc = {"gyro_lpf2":70,"dterm_lpf1":90,"dyn_notch":1}
-        extra_tips = ["Long Range, Smooth, ประหยัดแบต"]
+        extra_tips = ["Long Range – นิ่ง ประหยัดแบต"]
 
     analysis["pid"] = pid
     analysis["filter"] = filter_desc
     analysis["extra_tips"] = extra_tips
+
     analysis["thrust_ratio"] = calculate_thrust_weight(
         prop_result["effect"]["motor_load"], weight
     )
     analysis["battery_est"] = estimate_battery_runtime(weight, battery)
 
     return analysis
+
+
+# ===============================
+# ROUTE: หน้าแรก (Loading)
+# ===============================
+@app.route("/")
+def loading():
+    return render_template("loading.html")
+
+
 # ===============================
 # ROUTE: Landing Page
 # ===============================
@@ -65,25 +76,12 @@ def analyze_drone(size, battery, style, prop_result, weight):
 def landing():
     return render_template("landing.html")
 
-# ===============================
-# ROUTE: หน้า Loading
-# ===============================
-@app.route("/")
-def loading():
-    return render_template("loading.html")
 
 # ===============================
-# ROUTE: เช็ค backend
-# ===============================
-@app.route("/ping")
-def ping():
-    return "pong"
-
-# ===============================
-# ROUTE: แอพจริง
+# ROUTE: ตัวแอพหลัก
 # ===============================
 @app.route("/app", methods=["GET", "POST"])
-def index():
+def app_page():
     analysis = None
 
     if request.method == "POST":
@@ -91,6 +89,7 @@ def index():
         battery = request.form["battery"]
         style = request.form["style"]
         weight = float(request.form.get("weight", 1.0))
+
         prop_size = float(request.form["prop_size"])
         blade_count = int(request.form["blades"])
         prop_pitch = float(request.form["pitch"])
@@ -105,6 +104,15 @@ def index():
         analysis["prop_result"] = prop_result
 
     return render_template("index.html", analysis=analysis)
+
+
+# ===============================
+# ROUTE: เช็ค backend
+# ===============================
+@app.route("/ping")
+def ping():
+    return "pong"
+
 
 # ===============================
 # RUN
