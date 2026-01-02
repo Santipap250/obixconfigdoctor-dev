@@ -1,49 +1,56 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>OBIXConfig Doctor</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <!-- CSS สำหรับ Landing โดยเฉพาะ -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/landing.css') }}">
 </head>
 
-<body class="landing-body">
+<body>
+  <main class="container">
 
-  <main class="landing-container">
-
-    <!-- LOGO / TITLE -->
+    <!-- HERO -->
     <section class="hero">
       <h1>OBIXConfig Doctor</h1>
       <p class="subtitle">
-        ผู้ช่วยคำนวณค่า Betaflight สำหรับโดรน FPV<br>
-        ไม่มั่ว ไม่เดา ใช้เป็นจุดเริ่มต้นได้จริง
+        เครื่องมือช่วยวิเคราะห์และตั้งค่า FPV Drone  
+        สำหรับคนบินจริง ไม่มั่ว ไม่เดา
       </p>
 
-      <a href="/app" class="cta-button">
-        เริ่มใช้งานทันที
-      </a>
+      <a href="/app" class="cta-btn">เริ่มใช้งานทันที</a>
+      <div class="hint">ไม่ต้องสมัคร • ใช้ได้ทันที</div>
     </section>
 
-    <!-- HOW IT WORKS -->
-    <section class="how-it-works">
-      <div class="step">กรอกข้อมูลโดรนของคุณ</div>
-      <div class="arrow">→</div>
-      <div class="step">ระบบวิเคราะห์ตามสไตล์การบิน</div>
-      <div class="arrow">→</div>
-      <div class="step">ได้ค่า PID / Filter พร้อมแนวทางจูน</div>
+    <!-- FEATURES -->
+    <section class="features">
+      <div class="feature">
+        <h3>🔧 วิเคราะห์จากข้อมูลจริง</h3>
+        <p>ขนาดโดรน • แบต • ใบพัด • น้ำหนัก  
+        ระบบจะประเมินให้ตรงการใช้งาน</p>
+      </div>
+
+      <div class="feature">
+        <h3>⚙️ แนะนำ PID ตามสไตล์บิน</h3>
+        <p>Freestyle / Racing / Long Range  
+        ไม่ต้องเริ่มจากศูนย์</p>
+      </div>
+
+      <div class="feature">
+        <h3>🔋 คิดเรื่องแรงขับ & แบต</h3>
+        <p>ดูอัตราแรงยกต่อ น้ำหนัก  
+        และเวลาใช้งานคร่าว ๆ ได้ทันที</p>
+      </div>
     </section>
 
     <!-- FOOTER -->
-    <footer class="landing-footer">
-      <p>
-        Community Tool สำหรับนักบิน FPV<br>
-        พัฒนาโดย <strong>OBIXConfig Lab</strong>
-      </p>
-      <p class="version">v0.9 – Community Build</p>
+    <footer class="footer">
+      <div>OBIXConfig Lab</div>
+      <div class="small">Built by FPV pilot • For FPV pilot</div>
     </footer>
 
   </main>
-
 </body>
 </html>
