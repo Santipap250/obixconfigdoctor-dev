@@ -58,6 +58,12 @@ def analyze_drone(size, battery, style, prop_result, weight):
     analysis["battery_est"] = estimate_battery_runtime(weight, battery)
 
     return analysis
+# ===============================
+# ROUTE: Landing Page
+# ===============================
+@app.route("/landing")
+def landing():
+    return render_template("landing.html")
 
 # ===============================
 # ROUTE: หน้า Loading
