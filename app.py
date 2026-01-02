@@ -60,28 +60,19 @@ def analyze_drone(size, battery, style, prop_result, weight):
 
     return analysis
 
-
-# ===============================
-# ROUTE: หน้าแรก (Loading)
-# ===============================
+# หน้าแรก → Loading
 @app.route("/")
 def loading():
     return render_template("loading.html")
 
-
-# ===============================
-# ROUTE: Landing Page
-# ===============================
+# Landing Page
 @app.route("/landing")
 def landing():
     return render_template("landing.html")
 
-
-# ===============================
-# ROUTE: ตัวแอพหลัก
-# ===============================
+# ตัวแอพจริง
 @app.route("/app", methods=["GET", "POST"])
-def app_page():
+def index():
     analysis = None
 
     if request.method == "POST":
@@ -89,7 +80,6 @@ def app_page():
         battery = request.form["battery"]
         style = request.form["style"]
         weight = float(request.form.get("weight", 1.0))
-
         prop_size = float(request.form["prop_size"])
         blade_count = int(request.form["blades"])
         prop_pitch = float(request.form["pitch"])
@@ -104,7 +94,6 @@ def app_page():
         analysis["prop_result"] = prop_result
 
     return render_template("index.html", analysis=analysis)
-
 
 # ===============================
 # ROUTE: เช็ค backend
