@@ -1,56 +1,134 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-  <meta charset="UTF-8">
-  <title>OBIXConfig Doctor</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<title>OBIXConfig Lab</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- CSS สำหรับ Landing โดยเฉพาะ -->
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/landing.css') }}">
+<style>
+:root{
+  --bg:#0b0f14;
+  --card:#121821;
+  --primary:#58a6ff;
+  --accent:#4cff4c;
+  --text:#eaeaff;
+  --muted:#9aa4b2;
+}
+
+*{box-sizing:border-box;font-family:system-ui,Segoe UI,sans-serif;}
+
+body{
+  margin:0;
+  min-height:100vh;
+  background:radial-gradient(circle at top,var(--card),var(--bg));
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:var(--text);
+}
+
+.card{
+  background:rgba(18,24,33,.92);
+  border-radius:22px;
+  padding:42px 34px;
+  width:92%;
+  max-width:420px;
+  text-align:center;
+  box-shadow:0 0 50px rgba(0,0,0,.65);
+}
+
+.logo{
+  font-size:24px;
+  font-weight:800;
+  letter-spacing:1px;
+  color:var(--primary);
+  margin-bottom:8px;
+}
+
+.tagline{
+  font-size:14px;
+  color:var(--muted);
+  margin-bottom:26px;
+}
+
+.feature{
+  text-align:left;
+  background:#0d1117;
+  border-radius:14px;
+  padding:16px 18px;
+  margin-bottom:18px;
+}
+
+.feature li{
+  list-style:none;
+  margin-bottom:10px;
+  font-size:14px;
+}
+
+.feature li::before{
+  content:"✓";
+  color:var(--accent);
+  margin-right:8px;
+  font-weight:bold;
+}
+
+.cta{
+  margin-top:26px;
+}
+
+.start-btn{
+  display:block;
+  width:100%;
+  padding:16px;
+  font-size:16px;
+  font-weight:700;
+  color:#fff;
+  text-decoration:none;
+  border-radius:14px;
+  background:linear-gradient(135deg,#238636,#2ea043);
+  box-shadow:0 8px 26px rgba(46,160,67,.45);
+  transition:.25s;
+}
+
+.start-btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 12px 32px rgba(46,160,67,.6);
+}
+
+.note{
+  margin-top:18px;
+  font-size:12px;
+  color:var(--muted);
+}
+</style>
 </head>
 
 <body>
-  <main class="container">
 
-    <!-- HERO -->
-    <section class="hero">
-      <h1>OBIXConfig Doctor</h1>
-      <p class="subtitle">
-        เครื่องมือช่วยวิเคราะห์และตั้งค่า FPV Drone  
-        สำหรับคนบินจริง ไม่มั่ว ไม่เดา
-      </p>
+<div class="card">
+  <div class="logo">OBIXConfig Lab</div>
+  <div class="tagline">
+    เครื่องมือช่วยวิเคราะห์ & ตั้งค่า FPV Drone<br>
+    สำหรับคนบินจริง
+  </div>
 
-      <a href="/app" class="cta-btn">เริ่มใช้งานทันที</a>
-      <div class="hint">ไม่ต้องสมัคร • ใช้ได้ทันที</div>
-    </section>
+  <ul class="feature">
+    <li>เลือกขนาดโดรน แบต ใบพัด</li>
+    <li>วิเคราะห์แรงขับ & เวลาในการบิน</li>
+    <li>แนะนำ PID / Filter ตามสไตล์บิน</li>
+    <li>ใช้งานฟรี ไม่ต้องสมัคร</li>
+  </ul>
 
-    <!-- FEATURES -->
-    <section class="features">
-      <div class="feature">
-        <h3>🔧 วิเคราะห์จากข้อมูลจริง</h3>
-        <p>ขนาดโดรน • แบต • ใบพัด • น้ำหนัก  
-        ระบบจะประเมินให้ตรงการใช้งาน</p>
-      </div>
+  <div class="cta">
+    <a href="/app" class="start-btn">
+      เริ่มใช้งานทันที 🚀
+    </a>
+  </div>
 
-      <div class="feature">
-        <h3>⚙️ แนะนำ PID ตามสไตล์บิน</h3>
-        <p>Freestyle / Racing / Long Range  
-        ไม่ต้องเริ่มจากศูนย์</p>
-      </div>
+  <div class="note">
+    Designed for FPV pilots by OBIXConfig Lab
+  </div>
+</div>
 
-      <div class="feature">
-        <h3>🔋 คิดเรื่องแรงขับ & แบต</h3>
-        <p>ดูอัตราแรงยกต่อ น้ำหนัก  
-        และเวลาใช้งานคร่าว ๆ ได้ทันที</p>
-      </div>
-    </section>
-
-    <!-- FOOTER -->
-    <footer class="footer">
-      <div>OBIXConfig Lab</div>
-      <div class="small">Built by FPV pilot • For FPV pilot</div>
-    </footer>
-
-  </main>
 </body>
 </html>
