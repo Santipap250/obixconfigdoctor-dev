@@ -1,83 +1,49 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-<meta name="description" content="OBIXConfig Doctor เครื่องมือช่วยวิเคราะห์และแนะนำการจูนโดรน FPV สำหรับมือใหม่และนักบินสายจริง ใช้งานง่าย เข้าใจเร็ว">
-<meta charset="UTF-8">
-<title>OBIXConfig Doctor</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <title>OBIXConfig Doctor</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 
-<body>
+<body class="landing-body">
 
-<!-- ===== HERO / LOGO ===== -->
-<div class="top-bar center-logo">
-  <img src="{{ url_for('static', filename='img/obix-logo.png') }}" class="logo">
-</div>
+  <main class="landing-container">
 
-<div class="container">
+    <!-- LOGO / TITLE -->
+    <section class="hero">
+      <h1>OBIXConfig Doctor</h1>
+      <p class="subtitle">
+        ผู้ช่วยคำนวณค่า Betaflight สำหรับโดรน FPV<br>
+        ไม่มั่ว ไม่เดา ใช้เป็นจุดเริ่มต้นได้จริง
+      </p>
 
-<!-- ===== INTRO ===== -->
-<div class="concept-box open">
-  <div class="concept-header">
-    <span class="concept-title">🧠 OBIXConfig Doctor คืออะไร</span>
-  </div>
+      <a href="/app" class="cta-button">
+        เริ่มใช้งานทันที
+      </a>
+    </section>
 
-  <div class="concept-content" style="display:block">
-    <p>
-      <strong>OBIXConfig Doctor</strong> คือเครื่องมือช่วยวิเคราะห์และแนะนำค่า
-      สำหรับการจูนโดรน FPV แบบเข้าใจง่าย
-    </p>
+    <!-- HOW IT WORKS -->
+    <section class="how-it-works">
+      <div class="step">กรอกข้อมูลโดรนของคุณ</div>
+      <div class="arrow">→</div>
+      <div class="step">ระบบวิเคราะห์ตามสไตล์การบิน</div>
+      <div class="arrow">→</div>
+      <div class="step">ได้ค่า PID / Filter พร้อมแนวทางจูน</div>
+    </section>
 
-    <ul>
-      <li>🔧 ใช้เป็น <strong>จุดเริ่มต้น</strong> ในการจูน (ไม่ใช่สูตรตายตัว)</li>
-      <li>🛩️ เหมาะกับทั้งมือใหม่ และนักบินที่อยากได้ baseline เร็ว ๆ</li>
-      <li>📊 อ้างอิงแนวคิดจากการบิน FPV จริง</li>
-    </ul>
+    <!-- FOOTER -->
+    <footer class="landing-footer">
+      <p>
+        Community Tool สำหรับนักบิน FPV<br>
+        พัฒนาโดย <strong>OBIXConfig Lab</strong>
+      </p>
+      <p class="version">v0.9 – Community Build</p>
+    </footer>
 
-    <p class="concept-note">
-      ค่าแนะนำอาจต้องปรับตามอุปกรณ์ น้ำหนัก และสไตล์การบินของแต่ละคน
-    </p>
-  </div>
-</div>
+  </main>
 
-<!-- ===== CTA ===== -->
-<div style="text-align:center; margin:40px 0;">
-  <a href="/app" class="community-btn" style="font-size:1rem; padding:16px 32px;">
-    🚀 เริ่มวิเคราะห์โดรนของคุณ
-  </a>
-</div>
-
-<!-- ===== COMMUNITY ===== -->
-<div class="community-box">
-  <p class="community-text">
-    ตอนนี้ <strong>OBIXConfig Doctor</strong> ยังพัฒนาอยู่เรื่อย ๆ 🚧<br><br>
-
-    ถ้าคุณอยากให้เว็บ<br>
-    👉 รองรับโดรนขนาดไหน<br>
-    👉 เพิ่มฟีเจอร์อะไร<br><br>
-
-    <span class="highlight">
-      แนะนำได้ที่เพจ<br>
-      <strong>OBIXConfig Lab</strong>
-    </span><br><br>
-
-    เว็บนี้ทำเพื่อชุมชน FPV จริง ๆ ❤️
-  </p>
-
-  <a href="https://www.facebook.com/banmysanti/"
-     target="_blank"
-     class="community-btn">
-     ไปที่เพจ OBIXConfig Lab
-  </a>
-</div>
-
-<div class="version-note">
-  OBIXConfig Doctor • v0.9 beta<br>
-  Developed by FPV community 🇹🇭
-</div>
-
-</div>
 </body>
 </html>
