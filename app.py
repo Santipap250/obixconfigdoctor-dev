@@ -1,113 +1,116 @@
+#!/usr/bin/env python3
+"""app.py - patched for safer input handling, validation, error handlers and logging"""
+import os
+import logging
 from flask import Flask, render_template, request
-from analyzer.prop_logic import analyze_propeller
-from analyzer.thrust_logic import calculate_thrust_weight, estimate_battery_runtime
-from analyzer.battery_logic import analyze_battery
+
+# Try to import project modules; if missing, code will provide clear warnings
+try:
+    from analyzer.prop_logic import analyze_propeller
+except Exception:
+    analyze_propeller = None
+
+try:
+    from logic.doctor import analyze_drone
+except Exception:
+    analyze_drone = None
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev-change-me')
 
-# ===============================
-# LOGIC วิเคราะห์โดรน
-# ===============================
-def analyze_drone(size, battery, style, prop_result, weight):
-    analysis = {}
+def parse_float(form, key, default=None, minv=None, maxv=None, required=False):
+    raw = form.get(key, None)
+    if raw is None or raw == "":
+        if required and default is None:
+            raise ValueError(f"Field '{key}' is required")
+        return default
+    try:
+        v = float(raw)
+    except (ValueError, TypeError):
+        raise ValueError(f"Field '{key}' must be a number")
+    if minv is not None and v < minv:
+        raise ValueError(f"Field '{key}' must be >= {minv}")
+    if maxv is not None and v > maxv:
+        raise ValueError(f"Field '{key}' must be <= {maxv}")
+    return v
 
-    analysis["overview"] = (
-        f'โดรน {size}" แบต {battery}, สไตล์ {style}, ใบพัด: {prop_result["summary"]}'
-    )
+def parse_int(form, key, default=None, minv=None, maxv=None, required=False):
+    raw = form.get(key, None)
+    if raw is None or raw == "":
+        if required and default is None:
+            raise ValueError(f"Field '{key}' is required")
+        return default
+    try:
+        v = int(raw)
+    except (ValueError, TypeError):
+        raise ValueError(f"Field '{key}' must be an integer")
+    if minv is not None and v < minv:
+        raise ValueError(f"Field '{key}' must be >= {minv}")
+    if maxv is not None and v > maxv:
+        raise ValueError(f"Field '{key}' must be <= {maxv}")
+    return v
 
-    analysis["basic_tips"] = [
-        "ตรวจสอบใบพัดไม่บิดงอ",
-        "ขันน็อตมอเตอร์ให้แน่น",
-        "เช็คจุดบัดกรี ESC และแบตเตอรี่"
-    ]
-
-    # PID + Filter
-    if style == "freestyle":
-        pid = {
-            "roll": {"p":48,"i":52,"d":38},
-            "pitch":{"p":48,"i":52,"d":38},
-            "yaw":{"p":40,"i":45,"d":0}
-        }
-        filter_desc = {"gyro_lpf2":90,"dterm_lpf1":120,"dyn_notch":2}
-        extra_tips = ["Freestyle, สมดุล แรงพอดี"]
-
-    elif style == "racing":
-        pid = {
-            "roll": {"p":55,"i":45,"d":42},
-            "pitch":{"p":55,"i":45,"d":42},
-            "yaw":{"p":50,"i":40,"d":0}
-        }
-        filter_desc = {"gyro_lpf2":120,"dterm_lpf1":150,"dyn_notch":3}
-        extra_tips = ["Racing, ตอบสนองไว"]
-
-    else:
-        pid = {
-            "roll": {"p":42,"i":50,"d":32},
-            "pitch":{"p":42,"i":50,"d":32},
-            "yaw":{"p":35,"i":45,"d":0}
-        }
-        filter_desc = {"gyro_lpf2":70,"dterm_lpf1":90,"dyn_notch":1}
-        extra_tips = ["Long Range, Smooth, ประหยัดแบต"]
-
-    analysis["pid"] = pid
-    analysis["filter"] = filter_desc
-    analysis["extra_tips"] = extra_tips
-    analysis["thrust_ratio"] = calculate_thrust_weight(
-        prop_result["effect"]["motor_load"], weight
-    )
-    analysis["battery_est"] = estimate_battery_runtime(weight, battery)
-
-    return analysis
-# ===============================
-# ROUTE: Landing Page
-# ===============================
-@app.route("/landing")
-def landing():
-    return render_template("landing.html")
-
-# ===============================
-# ROUTE: หน้า Loading
-# ===============================
-@app.route("/")
+@app.route('/')
 def loading():
-    return render_template("loading.html")
+    if os.path.exists(os.path.join(app.root_path, 'templates', 'loading.html')):
+        return render_template('loading.html')
+    return '<h3>OBIXConfig Lab — Loading...</h3>'
 
-# ===============================
-# ROUTE: เช็ค backend
-# ===============================
-@app.route("/ping")
-def ping():
-    return "pong"
-
-# ===============================
-# ROUTE: แอพจริง
-# ===============================
-@app.route("/app", methods=["GET", "POST"])
-def index():
+@app.route('/app', methods=['GET', 'POST'])
+def app_page():
     analysis = None
+    errors = []
+    if request.method == 'POST':
+        form = request.form
+        try:
+            size = parse_float(form, 'size', default=5.0, minv=0.1, maxv=100.0)
+            weight = parse_float(form, 'weight', default=450.0, minv=1.0, maxv=100000.0)
+            battery = form.get('battery', '4S')
+            style = form.get('style', 'Freestyle')
 
-    if request.method == "POST":
-        size = float(request.form["size"])
-        battery = request.form["battery"]
-        style = request.form["style"]
-        weight = float(request.form.get("weight", 1.0))
-        prop_size = float(request.form["prop_size"])
-        blade_count = int(request.form["blades"])
-        prop_pitch = float(request.form["pitch"])
+            prop_size = parse_float(form, 'prop_size', default=5.0, minv=1.0, maxv=30.0)
+            blades = parse_int(form, 'blades', default=2, minv=1, maxv=8)
+            pitch = parse_float(form, 'pitch', default=3.0, minv=0.1, maxv=12.0)
 
-        prop_result = analyze_propeller(
-            prop_size, prop_pitch, blade_count, style
-        )
+            if analyze_propeller is None:
+                raise RuntimeError('analyze_propeller module not found')
+            prop_result = analyze_propeller(prop_size, pitch, blades, style)
 
-        analysis = analyze_drone(
-            size, battery, style, prop_result, weight
-        )
-        analysis["prop_result"] = prop_result
+            if analyze_drone is None:
+                analysis = {
+                    'warning': 'analyze_drone function not found in logic.doctor; prop_result provided only',
+                    'prop_result': prop_result
+                }
+            else:
+                analysis = analyze_drone(size, battery, style, prop_result, weight)
+                if not isinstance(analysis, dict):
+                    analysis = {'result': str(analysis)}
+                analysis['prop_result'] = prop_result
 
-    return render_template("index.html", analysis=analysis)
+        except ValueError as ve:
+            logger.warning('Validation error: %s', ve)
+            errors.append(str(ve))
+        except Exception as e:
+            logger.exception('Unexpected error while processing form')
+            errors.append('Internal server error')
 
-# ===============================
-# RUN
-# ===============================
-if __name__ == "__main__":
-    app.run(debug=True)
+    template = 'index.html' if os.path.exists(os.path.join(app.root_path, 'templates', 'index.html')) else None
+    if template:
+        return render_template(template, analysis=analysis, errors=errors)
+    return f"<html><body><h3>Analysis</h3><pre>{analysis}</pre><p>Errors: {errors}</p></body></html>"
+
+@app.errorhandler(400)
+def bad_request(e):
+    return render_template('error.html', code=400, message=str(e)), 400
+
+@app.errorhandler(500)
+def server_error(e):
+    logger.exception('Server error: %s', e)
+    return render_template('error.html', code=500, message='Internal server error'), 500
+
+if __name__ == '__main__':
+    debug_mode = os.environ.get('FLASK_DEBUG', '0') == '1'
+    app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)), debug=debug_mode)
