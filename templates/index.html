@@ -113,33 +113,8 @@ function copyCLI() {
     alert("คัดลอก CLI เรียบร้อยแล้ว 🚀");
   });
 }
-
 </script>
-function applyPreset(type) {
-  const styleSelect = document.querySelector('select[name="style"]');
-  const bladeSelect = document.querySelector('select[name="blades"]');
-  const pitchInput  = document.querySelector('input[name="pitch"]');
 
-  if (type === 'beginner') {
-    styleSelect.value = 'freestyle';
-    bladeSelect.value = '3';
-    pitchInput.value = '3.5';
-  }
-
-  if (type === 'freestyle') {
-    styleSelect.value = 'freestyle';
-    bladeSelect.value = '3';
-    pitchInput.value = '4.0';
-  }
-
-  if (type === 'longrange') {
-    styleSelect.value = 'longrange';
-    bladeSelect.value = '2';
-    pitchInput.value = '3.0';
-  }
- styleSelect.scrollIntoView({ behavior: 'smooth' });
-}
-</script>
 <body>
 <div class="top-bar center-logo">
   <img src="{{ url_for('static', filename='img/obix-logo.png') }}" class="logo">
@@ -148,29 +123,6 @@ function applyPreset(type) {
 </div>
 
 <div class="container">
-<div class="preset-box">
-  <h3>⚡ เลือก Preset เร็ว ๆ</h3>
-
-  <div class="preset-grid">
-    <button type="button" class="preset-btn beginner"
-      onclick="applyPreset('beginner')">
-      🟢 Beginner<br>
-      <span>บินนิ่ง ปลอดภัย</span>
-    </button>
-
-    <button type="button" class="preset-btn freestyle"
-      onclick="applyPreset('freestyle')">
-      🔵 Freestyle<br>
-      <span>บาลานซ์ สนุก</span>
-    </button>
-
-    <button type="button" class="preset-btn longrange"
-      onclick="applyPreset('longrange')">
-      🟣 Long Range<br>
-      <span>นิ่ง ประหยัดแบต</span>
-    </button>
-  </div>
-</div>
 <div class="concept-box">
 
   <div class="concept-header" onclick="toggleConcept()">
@@ -313,8 +265,6 @@ function applyPreset(type) {
 
   <p class="preset-note">
     * Preset เหล่านี้เป็นแนวทางเริ่มต้น สามารถนำไปปรับต่อให้เหมาะกับโดรนของคุณ
-</p>
-
  <div class="cli-box">
   <h3>🧠 CLI Preset (Betaflight)</h3>
 
