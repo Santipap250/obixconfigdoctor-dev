@@ -110,7 +110,9 @@ def bad_request(e):
 def server_error(e):
     logger.exception('Server error: %s', e)
     return render_template('error.html', code=500, message='Internal server error'), 500
-
+@app.route('/ping')
+def ping():
+    return 'pong', 200
 if __name__ == '__main__':
     debug_mode = os.environ.get('FLASK_DEBUG', '0') == '1'
     app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)), debug=debug_mode)
