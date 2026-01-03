@@ -124,7 +124,29 @@ function copyCLI() {
 
 <div class="container">
 <div class="concept-box">
+<div class="preset-box">
+  <h3>⚡ เลือก Preset เร็ว ๆ</h3>
 
+  <div class="preset-grid">
+    <button type="button" class="preset-btn beginner"
+      onclick="applyPreset('beginner')">
+      🟢 Beginner<br>
+      <span>บินนิ่ง ปลอดภัย</span>
+    </button>
+
+    <button type="button" class="preset-btn freestyle"
+      onclick="applyPreset('freestyle')">
+      🔵 Freestyle<br>
+      <span>บาลานซ์ สนุก</span>
+    </button>
+
+    <button type="button" class="preset-btn longrange"
+      onclick="applyPreset('longrange')">
+      🟣 Long Range<br>
+      <span>นิ่ง ประหยัดแบต</span>
+    </button>
+  </div>
+</div>
   <div class="concept-header" onclick="toggleConcept()">
     <span class="concept-title">🧠 แนวคิดการคำนวณค่า</span>
 <span class="concept-icon">📜</span>
