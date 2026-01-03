@@ -97,9 +97,9 @@ def app_page():
             logger.exception('Unexpected error while processing form')
             errors.append('Internal server error')
 
-    template = 'index.html' if os.path.exists(os.path.join(app.root_path, 'templates', 'index.html')) else None
+    template = 'app.html' if os.path.exists(os.path.join(app.root_path, 'templates', 'index.html')) else None
     if template:
-        return render_template(template, analysis=analysis, errors=errors)
+        return render_template('app.html', analysis=analysis, errors=errors)
     return f"<html><body><h3>Analysis</h3><pre>{analysis}</pre><p>Errors: {errors}</p></body></html>"
 
 @app.errorhandler(400)
