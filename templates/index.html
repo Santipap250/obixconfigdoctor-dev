@@ -150,7 +150,29 @@ function copyCLI() {
   </div>
 
 </div>
+<div class="preset-box">
+  <h3>⚡ เลือก Preset เร็ว ๆ</h3>
 
+  <div class="preset-grid">
+    <button type="button" class="preset-btn beginner"
+      onclick="applyPreset('beginner')">
+      🟢 Beginner<br>
+      <span>บินนิ่ง ปลอดภัย</span>
+    </button>
+
+    <button type="button" class="preset-btn freestyle"
+      onclick="applyPreset('freestyle')">
+      🔵 Freestyle<br>
+      <span>บาลานซ์ สนุก</span>
+    </button>
+
+    <button type="button" class="preset-btn longrange"
+      onclick="applyPreset('longrange')">
+      🟣 Long Range<br>
+      <span>นิ่ง ประหยัดแบต</span>
+    </button>
+  </div>
+</div>
 <form method="POST" class="form-card">
     <label>ขนาดโดรน (นิ้ว)</label>
     <input type="number" name="size" placeholder="เช่น 5" required>
