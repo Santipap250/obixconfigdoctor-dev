@@ -15,6 +15,41 @@ try:
 except Exception:
     analyze_drone = None
 
+def safe_analysis(a):
+    if not isinstance(a, dict):
+        return None
+
+    a.setdefault('style', '-')
+    a.setdefault('weight_class', '-')
+    a.setdefault('thrust_ratio', 0)
+    a.setdefault('flight_time', 0)
+    a.setdefault('summary', '-')
+    a.setdefault('basic_tips', [])
+
+    a.setdefault('pid', {
+        'roll': {'p': 0, 'i': 0, 'd': 0},
+        'pitch': {'p': 0, 'i': 0, 'd': 0},
+        'yaw': {'p': 0, 'i': 0}
+    })
+
+    a.setdefault('filter', {
+        'gyro_lpf2': 0,
+        'dterm_lpf1': 0,
+        'dyn_notch': 'OFF'
+    })
+
+    a.setdefault('prop_result', {
+        'summary': '-',
+        'effect': {
+            'noise': 0,
+            'motor_load': 0,
+            'grip': '-'
+        },
+        'recommendation': '-'
+    })
+
+    return a
+
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
@@ -86,10 +121,9 @@ def app_page():
                 }
             else:
                 analysis = analyze_drone(size, battery, style, prop_result, weight)
-                if not isinstance(analysis, dict):
-                    analysis = {'result': str(analysis)}
-                analysis['prop_result'] = prop_result
+analysis['prop_result'] = prop_result
 
+analysis = safe_analysis(analysis)
         except ValueError as ve:
             logger.warning('Validation error: %s', ve)
             errors.append(str(ve))
