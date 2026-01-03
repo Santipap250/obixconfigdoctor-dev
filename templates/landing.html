@@ -1,134 +1,83 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
+<meta name="description" content="OBIXConfig Doctor เครื่องมือช่วยวิเคราะห์และแนะนำการจูนโดรน FPV สำหรับมือใหม่และนักบินสายจริง ใช้งานง่าย เข้าใจเร็ว">
 <meta charset="UTF-8">
-<title>OBIXConfig Lab</title>
+<title>OBIXConfig Doctor</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<style>
-:root{
-  --bg:#0b0f14;
-  --card:#121821;
-  --primary:#58a6ff;
-  --accent:#4cff4c;
-  --text:#eaeaff;
-  --muted:#9aa4b2;
-}
-
-*{box-sizing:border-box;font-family:system-ui,Segoe UI,sans-serif;}
-
-body{
-  margin:0;
-  min-height:100vh;
-  background:radial-gradient(circle at top,var(--card),var(--bg));
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:var(--text);
-}
-
-.card{
-  background:rgba(18,24,33,.92);
-  border-radius:22px;
-  padding:42px 34px;
-  width:92%;
-  max-width:420px;
-  text-align:center;
-  box-shadow:0 0 50px rgba(0,0,0,.65);
-}
-
-.logo{
-  font-size:24px;
-  font-weight:800;
-  letter-spacing:1px;
-  color:var(--primary);
-  margin-bottom:8px;
-}
-
-.tagline{
-  font-size:14px;
-  color:var(--muted);
-  margin-bottom:26px;
-}
-
-.feature{
-  text-align:left;
-  background:#0d1117;
-  border-radius:14px;
-  padding:16px 18px;
-  margin-bottom:18px;
-}
-
-.feature li{
-  list-style:none;
-  margin-bottom:10px;
-  font-size:14px;
-}
-
-.feature li::before{
-  content:"✓";
-  color:var(--accent);
-  margin-right:8px;
-  font-weight:bold;
-}
-
-.cta{
-  margin-top:26px;
-}
-
-.start-btn{
-  display:block;
-  width:100%;
-  padding:16px;
-  font-size:16px;
-  font-weight:700;
-  color:#fff;
-  text-decoration:none;
-  border-radius:14px;
-  background:linear-gradient(135deg,#238636,#2ea043);
-  box-shadow:0 8px 26px rgba(46,160,67,.45);
-  transition:.25s;
-}
-
-.start-btn:hover{
-  transform:translateY(-2px);
-  box-shadow:0 12px 32px rgba(46,160,67,.6);
-}
-
-.note{
-  margin-top:18px;
-  font-size:12px;
-  color:var(--muted);
-}
-</style>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 
 <body>
 
-<div class="card">
-  <div class="logo">OBIXConfig Lab</div>
-  <div class="tagline">
-    เครื่องมือช่วยวิเคราะห์ & ตั้งค่า FPV Drone<br>
-    สำหรับคนบินจริง
+<!-- ===== HERO / LOGO ===== -->
+<div class="top-bar center-logo">
+  <img src="{{ url_for('static', filename='img/obix-logo.png') }}" class="logo">
+</div>
+
+<div class="container">
+
+<!-- ===== INTRO ===== -->
+<div class="concept-box open">
+  <div class="concept-header">
+    <span class="concept-title">🧠 OBIXConfig Doctor คืออะไร</span>
   </div>
 
-  <ul class="feature">
-    <li>เลือกขนาดโดรน แบต ใบพัด</li>
-    <li>วิเคราะห์แรงขับ & เวลาในการบิน</li>
-    <li>แนะนำ PID / Filter ตามสไตล์บิน</li>
-    <li>ใช้งานฟรี ไม่ต้องสมัคร</li>
-  </ul>
+  <div class="concept-content" style="display:block">
+    <p>
+      <strong>OBIXConfig Doctor</strong> คือเครื่องมือช่วยวิเคราะห์และแนะนำค่า
+      สำหรับการจูนโดรน FPV แบบเข้าใจง่าย
+    </p>
 
-  <div class="cta">
-    <a href="/app" class="start-btn">
-      เริ่มใช้งานทันที 🚀
-    </a>
-  </div>
+    <ul>
+      <li>🔧 ใช้เป็น <strong>จุดเริ่มต้น</strong> ในการจูน (ไม่ใช่สูตรตายตัว)</li>
+      <li>🛩️ เหมาะกับทั้งมือใหม่ และนักบินที่อยากได้ baseline เร็ว ๆ</li>
+      <li>📊 อ้างอิงแนวคิดจากการบิน FPV จริง</li>
+    </ul>
 
-  <div class="note">
-    Designed for FPV pilots by OBIXConfig Lab
+    <p class="concept-note">
+      ค่าแนะนำอาจต้องปรับตามอุปกรณ์ น้ำหนัก และสไตล์การบินของแต่ละคน
+    </p>
   </div>
 </div>
 
+<!-- ===== CTA ===== -->
+<div style="text-align:center; margin:40px 0;">
+  <a href="/app" class="community-btn" style="font-size:1rem; padding:16px 32px;">
+    🚀 เริ่มวิเคราะห์โดรนของคุณ
+  </a>
+</div>
+
+<!-- ===== COMMUNITY ===== -->
+<div class="community-box">
+  <p class="community-text">
+    ตอนนี้ <strong>OBIXConfig Doctor</strong> ยังพัฒนาอยู่เรื่อย ๆ 🚧<br><br>
+
+    ถ้าคุณอยากให้เว็บ<br>
+    👉 รองรับโดรนขนาดไหน<br>
+    👉 เพิ่มฟีเจอร์อะไร<br><br>
+
+    <span class="highlight">
+      แนะนำได้ที่เพจ<br>
+      <strong>OBIXConfig Lab</strong>
+    </span><br><br>
+
+    เว็บนี้ทำเพื่อชุมชน FPV จริง ๆ ❤️
+  </p>
+
+  <a href="https://www.facebook.com/banmysanti/"
+     target="_blank"
+     class="community-btn">
+     ไปที่เพจ OBIXConfig Lab
+  </a>
+</div>
+
+<div class="version-note">
+  OBIXConfig Doctor • v0.9 beta<br>
+  Developed by FPV community 🇹🇭
+</div>
+
+</div>
 </body>
 </html>
