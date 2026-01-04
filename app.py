@@ -75,9 +75,17 @@ def safe_analysis(a):
 def ping():
     return "ok", 200
 
-@app.route('/')
+@app.route("/")
 def root():
-    return redirect(url_for('app_page'))
+    return render_template("loading.html")
+
+@app.route("/landing")
+def landing():
+    return render_template("landing.html")
+
+@app.route("/app")
+def app_page():
+    return render_template("index.html")
 
 @app.route('/app', methods=['GET', 'POST'])
 def app_page():
