@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import os
 import logging
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request
 
 # ----------------- app init -----------------
 logging.basicConfig(level=logging.INFO)
@@ -13,13 +13,17 @@ app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY", "dev-change-me")
 # ----------------- optional imports -----------------
 try:
     from analyzer.prop_logic import analyze_propeller
+    logger.info("analyzer.prop_logic loaded")
 except Exception:
     analyze_propeller = None
+    logger.warning("analyzer.prop_logic NOT available")
 
 try:
     from logic.doctor import analyze_drone
+    logger.info("logic.doctor (analyze_drone) loaded")
 except Exception:
     analyze_drone = None
+    logger.warning("logic.doctor (analyze_drone) NOT available")
 
 # ----------------- helpers -----------------
 def parse_float(form, key, default=None):
@@ -69,30 +73,27 @@ def safe_analysis(a):
 
     return a
 
-# ----------------- routes
------------------
+# ----------------- routes -----------------
 @app.route("/ping")
 def ping():
     return "ok", 200
 
 @app.route("/")
 def root():
+    # root shows the loading page (itself checks backend /ping and redirects)
     return render_template("loading.html")
 
 @app.route("/landing")
 def landing():
     return render_template("landing.html")
 
-@app.route("/app")
-def app_page():
-    return render_template("index.html")
-
-@app.route('/app', methods=['GET', 'POST'])
+# single handler for /app (GET & POST)
+@app.route("/app", methods=["GET", "POST"])
 def app_page():
     analysis = None
     errors = []
 
-    if request.method == 'POST':
+    if request.method == "POST":
         try:
             size = parse_float(request.form, 'size', 5)
             weight = parse_float(request.form, 'weight', 500)
@@ -106,15 +107,34 @@ def app_page():
             if analyze_propeller:
                 prop_result = analyze_propeller(prop_size, pitch, blades, style)
             else:
-                prop_result = {}
+                prop_result = {
+                    "summary": f"{prop_size}\" x {blades} blades, pitch {pitch}",
+                    "effect": {"noise": 0, "motor_load": 0, "grip": "-"},
+                    "recommendation": "-"
+                }
 
             if analyze_drone:
                 analysis = analyze_drone(size, battery, style, prop_result, weight)
                 analysis['prop_result'] = prop_result
             else:
-                analysis = {'prop_result': prop_result}
+                # fallback minimal analysis so page still works
+                analysis = {
+                    "style": style,
+                    "weight_class": f"{weight} g",
+                    "thrust_ratio": 0,
+                    "flight_time": 0,
+                    "summary": "Analyzer module not installed; showing minimal data.",
+                    "basic_tips": ["Analyzer not available"],
+                    "pid": {
+                        'roll': {'p': 0, 'i': 0, 'd': 0},
+                        'pitch': {'p': 0, 'i': 0, 'd': 0},
+                        'yaw': {'p': 0, 'i': 0}
+                    },
+                    "filter": {"gyro_lpf2": 0, "dterm_lpf1": 0, "dyn_notch": "OFF"},
+                    "prop_result": prop_result
+                }
 
-        except Exception as e:
+        except Exception:
             logger.exception("analysis failed")
             errors.append("เกิดข้อผิดพลาดภายในระบบ")
 
