@@ -12,7 +12,11 @@ Features:
 """
 import os
 import logging
-from flask import Flask, render_template, request, redirect, url_for
+from flask import redirect, url_for
+
+@app.route('/')
+def root():
+    return redirect(url_for('app_page'), code=302)
 
 # Try imports; keep None if missing so app still starts
 try:
