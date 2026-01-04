@@ -69,10 +69,11 @@ def safe_analysis(a):
 
     return a
 
-# ----------------- routes -----------------
-@app.route('/ping')
+# ----------------- routes
+-----------------
+@app.route("/ping")
 def ping():
-    return 'pong', 200
+    return "ok", 200
 
 @app.route('/')
 def root():
