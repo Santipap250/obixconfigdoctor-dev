@@ -117,11 +117,6 @@ def loading():
     # fallback: redirect to /app
     return redirect(url_for('app_page'))
 
-@app.route('/ping')
-def ping():
-    # health check for Render (must return 200)
-    return 'pong', 200
-
 @app.route('/app', methods=['GET', 'POST'])
 def app_page():
     analysis = None
@@ -192,6 +187,9 @@ def bad_request(e):
 def server_error(e):
     logger.exception("Server error")
     return render_template('error.html', code=500, message='Internal server error'), 500
+@app.route('/ping')
+def ping():
+    return 'pong', 200
 
 # ---------- run ----------
 if __name__ == '__main__':
